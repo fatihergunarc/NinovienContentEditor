@@ -1,0 +1,72 @@
+{
+  "private": true,
+  "repository": "https://github.com/TryGhost/Koenig",
+  "author": "Ghost Foundation",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "eslintIgnore": [
+    "**/node_modules/**"
+  ],
+  "scripts": {
+    "dev": "yarn workspace @tryghost/koenig-demo dev",
+    "prepare": "husky .github/hooks",
+    "presetup": "yarn",
+    "setup": "yarn && lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
+    "preship": "lerna run preversion && yarn test",
+    "fix": "yarn cache clean && rm -rf node_modules && yarn",
+    "ship": "IS_SHIPPING=true lerna publish --git-remote ${GHOST_UPSTREAM:-origin}",
+    "main": "git checkout main && git pull ${GHOST_UPSTREAM:-origin} main && yarn"
+  },
+  "devDependencies": {
+    "eslint": "8.57.0",
+    "eslint-plugin-ghost": "3.4.0",
+    "husky": "9.1.4",
+    "lerna": "8.1.8",
+    "lint-staged": "15.2.9"
+  },
+  "renovate": {
+    "extends": [
+      "github>tryghost/renovate-config:quiet"
+    ],
+    "ignoreDeps": [
+      "codecov/codecov-action"
+    ],
+    "packageRules": [
+      {
+        "depTypeList": [
+          "devDependencies"
+        ],
+        "automerge": true,
+        "automergeType": "branch"
+      },
+      {
+        "groupName": "rollup + plugins",
+        "packagePatterns": [
+          "^rollup"
+        ]
+      },
+      {
+        "groupName": "lexical",
+        "packagePatterns": [
+          "^lexical",
+          "^@lexical"
+        ]
+      },
+      {
+        "groupName": "vitest",
+        "packagePatterns": [
+          "^vitest",
+          "^@vitest"
+        ]
+      },
+      {
+        "matchPackageNames": ["@tryghost/mobiledoc-kit"],
+        "enabled": false
+      }
+    ]
+  }
+}
