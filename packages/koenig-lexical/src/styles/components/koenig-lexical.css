@@ -5,7 +5,8 @@
 /* everything is nested here to keep it scoped to our container */
 .koenig-lexical {
     > * {
-        font-size: 1.7rem;
+        font-size: '62.5%';
+        line-height: 1.5em;
         font-weight: 400;
         letter-spacing: 0.1px;
         color: var(--grey-900);

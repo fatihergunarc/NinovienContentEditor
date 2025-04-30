@@ -33,3 +33,8 @@
 
     --kg-breakout-adjustment-with-fallback: var(--kg-breakout-adjustment, 0px);
 }
+
+:root {
+    font-size: 62.5%;
+    line-height: 1.5em;
+}
