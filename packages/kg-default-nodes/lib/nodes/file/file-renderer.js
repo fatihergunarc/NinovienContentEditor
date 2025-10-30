@@ -75,63 +75,79 @@ function cardTemplate(node, document) {
     container.setAttribute('title', 'Download');
     container.setAttribute('download', '');
 
-    const contents = document.createElement('div');
-    contents.setAttribute('class', 'kg-file-card-contents');
-
-    const title = document.createElement('div');
-    title.setAttribute('class', 'kg-file-card-title');
-    title.textContent = node.fileTitle || '';
-
-    const caption = document.createElement('div');
-    caption.setAttribute('class', 'kg-file-card-caption');
-    caption.textContent = node.fileCaption || '';
-
+    // Outer wrapper
+    const wrapper = document.createElement('div');
+    
+    // Main flex container matching the editor design
+    const flexContainer = document.createElement('div');
+    flexContainer.setAttribute('class', 'flex justify-between rounded-md border border-grey/30 p-2');
+    
+    // Left side content container
+    const hasContent = node.fileTitle || node.fileCaption;
+    const contentContainer = document.createElement('div');
+    contentContainer.setAttribute('class', `flex w-full flex-col px-2 font-sans ${hasContent ? 'justify-between' : 'justify-center'}`);
+    
+    // Title and description wrapper
+    if (hasContent) {
+        const textWrapper = document.createElement('div');
+        textWrapper.setAttribute('class', 'flex flex-col');
+        
+        if (node.fileTitle) {
+            const title = document.createElement('div');
+            title.setAttribute('class', 'h-[30px] bg-transparent text-lg font-bold leading-none tracking-tight text-black dark:text-grey-200');
+            title.setAttribute('data-kg-file-card', 'fileTitle');
+            title.textContent = node.fileTitle;
+            textWrapper.appendChild(title);
+        }
+        
+        if (node.fileCaption) {
+            const caption = document.createElement('div');
+            caption.setAttribute('class', 'h-[26px] bg-transparent pb-1 text-[1.6rem] font-normal leading-none text-grey-700 dark:text-grey-300');
+            caption.setAttribute('data-kg-file-card', 'fileDescription');
+            caption.textContent = node.fileCaption;
+            textWrapper.appendChild(caption);
+        }
+        
+        contentContainer.appendChild(textWrapper);
+    }
+    
+    // File metadata (name and size)
     const metadata = document.createElement('div');
-    metadata.setAttribute('class', 'kg-file-card-metadata');
-
-    const filename = document.createElement('div');
-    filename.setAttribute('class', 'kg-file-card-filename');
-    filename.textContent = node.fileName || '';
-
-    const filesize = document.createElement('div');
-    filesize.setAttribute('class', 'kg-file-card-filesize');
-    filesize.textContent = node.formattedFileSize || '';
-
-    metadata.appendChild(filename);
-    metadata.appendChild(filesize);
-
-    contents.appendChild(title);
-    contents.appendChild(caption);
-    contents.appendChild(metadata);
-
-    container.appendChild(contents);
-
-    const icon = document.createElement('div');
-    icon.setAttribute('class', 'kg-file-card-icon');
-
+    metadata.setAttribute('class', '!mt-0 py-1 text-sm font-medium text-grey-900 dark:text-grey-200');
+    metadata.setAttribute('data-kg-file-card', 'dataset');
+    
+    const fileName = document.createTextNode(node.fileName || '');
+    metadata.appendChild(fileName);
+    
+    const sizeSpan = document.createElement('span');
+    sizeSpan.setAttribute('class', 'text-grey-700');
+    sizeSpan.textContent = ` • ${node.formattedFileSize || ''}`;
+    metadata.appendChild(sizeSpan);
+    
+    contentContainer.appendChild(metadata);
+    flexContainer.appendChild(contentContainer);
+    
+    // Right side icon container with dynamic height
+    const iconContainer = document.createElement('div');
+    const bothTitleAndCaption = node.fileTitle && node.fileCaption;
+    const iconHeight = bothTitleAndCaption ? 'h-[96px]' : hasContent ? 'h-[64px]' : 'h-[40px]';
+    const iconSize = hasContent ? 'size-6' : 'size-5';
+    iconContainer.setAttribute('class', `!mt-0 flex w-full max-w-[96px] items-center justify-center rounded-md bg-grey-200 dark:bg-grey-900 ${iconHeight}`);
+    
+    // SVG icon
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('class', `text-green transition-all duration-75 ease-in ${iconSize}`);
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-
     const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
-    style.textContent = '.a{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}';
-
+    style.textContent = '.a{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px}';
     defs.appendChild(style);
 
-    const titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-    titleElement.textContent = 'download-circle';
-
-    const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-    polyline.setAttribute('class', 'a');
-    polyline.setAttribute('points', '8.25 14.25 12 18 15.75 14.25');
-
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('class', 'a');
-    line.setAttribute('x1', '12');
-    line.setAttribute('y1', '6.75');
-    line.setAttribute('x2', '12');
-    line.setAttribute('y2', '18');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('class', 'a');
+    path.setAttribute('d', 'M8.25 14.25 12 18l3.75-3.75M12 6.75V18');
 
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     circle.setAttribute('class', 'a');
@@ -140,13 +156,14 @@ function cardTemplate(node, document) {
     circle.setAttribute('r', '11.25');
 
     svg.appendChild(defs);
-    svg.appendChild(titleElement);
-    svg.appendChild(polyline);
-    svg.appendChild(line);
+    svg.appendChild(path);
     svg.appendChild(circle);
 
-    icon.appendChild(svg);
-    container.appendChild(icon);
+    iconContainer.appendChild(svg);
+    flexContainer.appendChild(iconContainer);
+    
+    wrapper.appendChild(flexContainer);
+    container.appendChild(wrapper);
     card.appendChild(container);
 
     return {element: card};
