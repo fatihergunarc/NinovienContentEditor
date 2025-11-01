@@ -1,7 +1,7 @@
 {
-  "name": "@zeeshanzahoor/koenig-lexical",
-  "version": "14.0.0",
-  "author": "Ghost Foundation",
+  "name": "@fatih_ergun/koenig-lexical",
+  "version": "1.0.3",
+  "author": "Fatih Ergun",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -56,7 +56,7 @@
     "@tryghost/helpers": "1.1.90",
     "@tryghost/kg-clean-basic-html": "4.1.4",
     "@tryghost/kg-converters": "1.0.7",
-    "@tryghost/kg-default-nodes": "1.2.2",
+    "@fatih_ergun/kg-default-nodes": "1.0.0",
     "@tryghost/kg-default-transforms": "1.1.22",
     "@tryghost/kg-markdown-html-renderer": "7.0.7",
     "@tryghost/kg-simplemde": "3.0.5",

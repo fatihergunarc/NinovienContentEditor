@@ -1,12 +1,12 @@
 {
-  "name": "@tryghost/kg-default-nodes",
-  "version": "1.2.2",
-  "repository": "https://github.com/TryGhost/Koenig/tree/main/packages/kg-default-nodes",
-  "author": "Ghost Foundation",
+  "name": "@fatih_ergun/kg-default-nodes",
+  "version": "1.0.0",
+  "repository": "...",
+  "author": "...",
   "license": "MIT",
+  "source": "lib/kg-default-nodes.js",
   "main": "cjs/kg-default-nodes.js",
   "module": "es/kg-default-nodes.js",
-  "source": "lib/kg-default-nodes.js",
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c",
