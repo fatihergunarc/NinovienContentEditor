@@ -1,12 +1,9 @@
 {
-  "name": "@tryghost/kg-unsplash-selector",
-  "version": "0.2.6",
+  "name": "@fatih_ergun/kg-unsplash-selector",
+  "version": "1.0.0",
+  "repository": "...",
+  "author": "...",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TryGhost/Koenig/tree/master/packages/kg-unsplash-selector"
-  },
-  "author": "Ghost Foundation",
   "files": [
     "LICENSE",
     "README.md",

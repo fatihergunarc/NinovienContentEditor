@@ -1,8 +1,8 @@
 {
-  "name": "@tryghost/kg-clean-basic-html",
-  "version": "4.1.4",
-  "repository": "https://github.com/TryGhost/Koenig/tree/master/packages/kg-clean-basic-html",
-  "author": "Ghost Foundation",
+  "name": "@fatih_ergun/kg-clean-basic-html",
+  "version": "1.0.0",
+  "repository": "...",
+  "author": "...",
   "license": "MIT",
   "main": "cjs/clean-basic-html.js",
   "module": "es/clean-basic-html.js",

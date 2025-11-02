@@ -1,8 +1,8 @@
 {
-  "name": "@tryghost/kg-converters",
-  "version": "1.0.7",
-  "repository": "https://github.com/TryGhost/Koenig/tree/main/packages/kg-converters",
-  "author": "Ghost Foundation",
+  "name": "@fatih_ergun/kg-converters",
+  "version": "1.0.0",
+  "repository": "...",
+  "author": "...",
   "license": "MIT",
   "main": "cjs/kg-converters.js",
   "module": "es/kg-converters.js",

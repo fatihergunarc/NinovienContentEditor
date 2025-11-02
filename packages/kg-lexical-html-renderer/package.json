@@ -1,8 +1,8 @@
 {
-  "name": "@tryghost/kg-lexical-html-renderer",
-  "version": "1.1.24",
-  "repository": "https://github.com/TryGhost/Koenig/tree/main/packages/kg-lexical-html-renderer",
-  "author": "Ghost Foundation",
+  "name": "@fatih_ergun/kg-lexical-html-renderer",
+  "version": "1.0.0",
+  "repository": "...",
+  "author": "...",
   "license": "MIT",
   "main": "build/index.js",
   "types": "build/index.d.ts",

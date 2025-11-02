@@ -1,8 +1,8 @@
 {
-  "name": "@tryghost/kg-parser-plugins",
-  "version": "4.1.4",
-  "repository": "https://github.com/TryGhost/Koenig/tree/master/packages/kg-parser-plugins",
-  "author": "Ghost Foundation",
+  "name": "@fatih_ergun/kg-parser-plugins",
+  "version": "1.0.0",
+  "repository": "...",
+  "author": "...",
   "license": "MIT",
   "main": "cjs/parser-plugins.js",
   "module": "es/parser-plugins.js",

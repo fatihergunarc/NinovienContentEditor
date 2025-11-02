@@ -1,8 +1,8 @@
 {
-  "name": "@tryghost/html-to-mobiledoc",
-  "version": "3.1.5",
-  "repository": "https://github.com/TryGhost/SDK/tree/master/packages/html-to-mobiledoc",
-  "author": "Ghost Foundation",
+  "name": "@fatih_ergun/kg-html-to-mobiledoc",
+  "version": "1.0.0",
+  "repository": "...",
+  "author": "...",
   "license": "MIT",
   "main": "index.js",
   "files": [
