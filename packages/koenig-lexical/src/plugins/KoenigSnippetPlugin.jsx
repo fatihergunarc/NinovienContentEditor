@@ -1,7 +1,7 @@
 import React from 'react';
 import {$createParagraphNode, $getSelection, COMMAND_PRIORITY_LOW, createCommand} from 'lexical';
 import {$generateNodesFromSerializedNodes, $insertGeneratedNodes} from '@lexical/clipboard';
-import {$isKoenigCard} from '@tryghost/kg-default-nodes';
+import {$isKoenigCard} from '@fatih_ergun/kg-default-nodes';
 import {INSERT_CARD_COMMAND} from './KoenigBehaviourPlugin';
 import {mergeRegister} from '@lexical/utils';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';

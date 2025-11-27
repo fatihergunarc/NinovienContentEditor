@@ -49,12 +49,12 @@ import {
     $selectDecoratorNode,
     getTopLevelNativeElement
 } from '../utils/';
-import {$isKoenigCard} from '@tryghost/kg-default-nodes';
+import {$isKoenigCard} from '@fatih_ergun/kg-default-nodes';
 import {$isListItemNode, $isListNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND} from '@lexical/list';
 import {$setBlocksType} from '@lexical/selection';
 import {MIME_TEXT_HTML, MIME_TEXT_PLAIN, PASTE_MARKDOWN_COMMAND} from './MarkdownPastePlugin.jsx';
 import {mergeRegister} from '@lexical/utils';
-import {registerDefaultTransforms} from '@tryghost/kg-default-transforms';
+import {registerDefaultTransforms} from '@fatih_ergun/kg-default-transforms';
 import {shouldIgnoreEvent} from '../utils/shouldIgnoreEvent';
 import {useKoenigSelectedCardContext} from '../context/KoenigSelectedCardContext';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';

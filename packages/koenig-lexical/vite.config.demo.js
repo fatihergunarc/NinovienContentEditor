@@ -23,11 +23,11 @@ export default (function viteDemoConfig() {
         },
         optimizeDeps: {
             include: [
-                '@tryghost/kg-clean-basic-html',
-                '@tryghost/kg-default-transforms',
-                '@tryghost/kg-markdown-html-renderer',
-                '@tryghost/kg-simplemde',
-                '@tryghost/kg-unsplash-selector'
+                '@fatih_ergun/kg-clean-basic-html',
+                '@fatih_ergun/kg-default-transforms',
+                '@fatih_ergun/kg-markdown-html-renderer',
+                '@fatih_ergun/kg-simplemde',
+                '@fatih_ergun/kg-unsplash-selector'
             ]
         },
         build: {

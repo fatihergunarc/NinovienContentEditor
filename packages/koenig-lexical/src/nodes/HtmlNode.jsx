@@ -2,7 +2,7 @@ import HtmlCardIcon from '../assets/icons/kg-card-type-html.svg?react';
 import HtmlIndicatorIcon from '../assets/icons/kg-indicator-html.svg?react';
 import KoenigCardWrapper from '../components/KoenigCardWrapper';
 import React from 'react';
-import {HtmlNode as BaseHtmlNode} from '@tryghost/kg-default-nodes';
+import {HtmlNode as BaseHtmlNode} from '@fatih_ergun/kg-default-nodes';
 import {HtmlNodeComponent} from './HtmlNodeComponent';
 import {createCommand} from 'lexical';
 

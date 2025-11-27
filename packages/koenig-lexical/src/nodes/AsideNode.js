@@ -1,7 +1,7 @@
 import {
     $createParagraphNode
 } from 'lexical';
-import {AsideNode as BaseAsideNode} from '@tryghost/kg-default-nodes';
+import {AsideNode as BaseAsideNode} from '@fatih_ergun/kg-default-nodes';
 import {
     addClassNamesToElement
 } from '@lexical/utils';

@@ -3,7 +3,7 @@ import KoenigComposerContext from '../context/KoenigComposerContext';
 import React from 'react';
 import defaultTheme from '../themes/default';
 import {CollaborationPlugin} from '@lexical/react/LexicalCollaborationPlugin';
-import {DEFAULT_CONFIG} from '@tryghost/kg-default-nodes';
+import {DEFAULT_CONFIG} from '@fatih_ergun/kg-default-nodes';
 import {Doc} from 'yjs';
 import {KoenigSelectedCardContext} from '../context/KoenigSelectedCardContext';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';

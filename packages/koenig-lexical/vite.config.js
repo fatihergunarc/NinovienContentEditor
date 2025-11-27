@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import autoprefixer from 'autoprefixer';
 import pkg from './package.json';
-import postcss from 'rollup-plugin-postcss';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import tailwindcss from 'tailwindcss';
@@ -18,16 +17,7 @@ export default (function viteConfig({mode}) {
 
     const plugins = [
         svgr(),
-        react(),
-        postcss({
-            extract: true, // Extract styles into a separate CSS file (e.g., dist/index.css)
-            plugins: [
-                tailwindcss, // Process Tailwind CSS
-                autoprefixer // Add vendor prefixes for broader browser support
-            ],
-            minimize: true, // Minify the CSS
-            sourceMap: true // Include source maps for easier debugging
-        })
+        react()
     ];
 
     // Keep sentryVitePlugin as the last plugin
@@ -71,10 +61,10 @@ export default (function viteConfig({mode}) {
         },
         optimizeDeps: {
             include: [
-                '@tryghost/kg-clean-basic-html',
-                '@tryghost/kg-default-transforms',
-                '@tryghost/kg-markdown-html-renderer',
-                '@tryghost/kg-simplemde'
+                '@fatih_ergun/kg-clean-basic-html',
+                '@fatih_ergun/kg-default-transforms',
+                '@fatih_ergun/kg-markdown-html-renderer',
+                '@fatih_ergun/kg-simplemde'
             ]
         },
         build: {
@@ -106,6 +96,14 @@ export default (function viteConfig({mode}) {
             },
             commonjsOptions: {
                 include: [/packages/, /node_modules/]
+            }
+        },
+        css: {
+            postcss: {
+                plugins: [
+                    tailwindcss,
+                    autoprefixer
+                ]
             }
         },
         test: {

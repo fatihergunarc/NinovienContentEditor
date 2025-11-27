@@ -1,4 +1,4 @@
-import MarkdownRenderer from '@tryghost/kg-markdown-html-renderer';
+import MarkdownRenderer from '@fatih_ergun/kg-markdown-html-renderer';
 import React from 'react';
 import {$getSelection, $isRangeSelection, COMMAND_PRIORITY_LOW, createCommand} from 'lexical';
 import {$insertDataTransferForRichText} from '@lexical/clipboard';

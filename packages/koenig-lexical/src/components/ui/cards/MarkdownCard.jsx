@@ -1,6 +1,6 @@
-import '@tryghost/kg-simplemde/dist/simplemde.min.css';
+import '@fatih_ergun/kg-simplemde/dist/simplemde.min.css';
 import MarkdownEditor from './MarkdownCard/MarkdownEditor';
-import MarkdownRenderer from '@tryghost/kg-markdown-html-renderer';
+import MarkdownRenderer from '@fatih_ergun/kg-markdown-html-renderer';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {sanitizeHtml} from '../../../utils/sanitize-html';

@@ -9,7 +9,7 @@ import {
     extendedHeadingNodeReplacement,
     extendedQuoteNodeReplacement,
     extendedTextNodeReplacement
-} from '@tryghost/kg-default-nodes';
+} from '@fatih_ergun/kg-default-nodes';
 
 import {AsideNode} from './AsideNode';
 import {AudioNode} from './AudioNode';

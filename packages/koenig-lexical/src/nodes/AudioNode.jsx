@@ -2,7 +2,7 @@ import KoenigCardWrapper from '../components/KoenigCardWrapper';
 
 import AudioCardIcon from '../assets/icons/kg-card-type-audio.svg?react';
 import {AudioNodeComponent} from './AudioNodeComponent';
-import {AudioNode as BaseAudioNode} from '@tryghost/kg-default-nodes';
+import {AudioNode as BaseAudioNode} from '@fatih_ergun/kg-default-nodes';
 import {createCommand} from 'lexical';
 
 export const INSERT_AUDIO_COMMAND = createCommand();

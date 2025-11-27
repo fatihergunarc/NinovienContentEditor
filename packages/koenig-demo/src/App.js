@@ -5,13 +5,13 @@ import React from 'react';
 import {fetchEmbed} from './utils/fetchEmbed';
 
 // bu css dosyasi editorun tasarimi icin kullanilir.
-import '@zeeshanzahoor/koenig-lexical/koenig-lexical.css'
+import '@fatih_ergun/koenig-lexical/index.css'
 
 // KoenigComposer bir React Context Provider'i olarak calisir ve editorun butun ozelliklerini saglar.
 // Bu componenti Editorun disinda eklenmelidir
 import {
   KoenigComposer,
-} from '@zeeshanzahoor/koenig-lexical';
+} from '@fatih_ergun/koenig-lexical';
 
 // file uploader icin kullanilan hook
 import {fileTypes, useFileUpload} from './utils/useFileUpload';

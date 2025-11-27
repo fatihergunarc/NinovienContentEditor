@@ -1,8 +1,8 @@
 import React from 'react';
 import VideoCardIcon from '../assets/icons/kg-card-type-video.svg?react';
-import cleanBasicHtml from '@tryghost/kg-clean-basic-html';
+import cleanBasicHtml from '@fatih_ergun/kg-clean-basic-html';
 import {$generateHtmlFromNodes} from '@lexical/html';
-import {VideoNode as BaseVideoNode} from '@tryghost/kg-default-nodes';
+import {VideoNode as BaseVideoNode} from '@fatih_ergun/kg-default-nodes';
 import {KoenigCardWrapper, MINIMAL_NODES} from '../index.js';
 import {VideoNodeComponent} from './VideoNodeComponent';
 import {createCommand} from 'lexical';

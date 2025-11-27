@@ -1,5 +1,5 @@
 import CardContext from '../context/CardContext';
-import {$createTKNode, $isTKNode, ExtendedTextNode, TKNode} from '@tryghost/kg-default-nodes';
+import {$createTKNode, $isTKNode, ExtendedTextNode, TKNode} from '@fatih_ergun/kg-default-nodes';
 import {$getNodeByKey, $getSelection, $isDecoratorNode, $isRangeSelection, TextNode} from 'lexical';
 import {SELECT_CARD_COMMAND} from './KoenigBehaviourPlugin';
 import {createPortal} from 'react-dom';

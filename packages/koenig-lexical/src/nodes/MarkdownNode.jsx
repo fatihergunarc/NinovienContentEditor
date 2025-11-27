@@ -2,7 +2,7 @@ import KoenigCardWrapper from '../components/KoenigCardWrapper';
 import MarkdownCardIcon from '../assets/icons/kg-card-type-markdown.svg?react';
 import MarkdownIndicatorIcon from '../assets/icons/kg-indicator-markdown.svg?react';
 import React from 'react';
-import {MarkdownNode as BaseMarkdownNode} from '@tryghost/kg-default-nodes';
+import {MarkdownNode as BaseMarkdownNode} from '@fatih_ergun/kg-default-nodes';
 import {MarkdownNodeComponent} from './MarkdownNodeComponent';
 import {createCommand} from 'lexical';
 

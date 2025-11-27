@@ -19,7 +19,7 @@
       "import": "./dist/koenig-lexical.js",
       "require": "./dist/koenig-lexical.umd.js"
     },
-    "./koenig-lexical.css": "./dist/koenig-lexical.css"
+    "./index.css": "./dist/index.css"
   },
   "scripts": {
     "dev": "concurrently \"vite --host --force\" \"yarn build --watch\" \"yarn preview -l silent --host\" \"yarn workspace @tryghost/kg-default-nodes dev\" \"yarn workspace @tryghost/kg-default-transforms dev\"",
@@ -54,13 +54,13 @@
     "@lexical/react": "0.13.1",
     "@tryghost/color-utils": "0.2.2",
     "@tryghost/helpers": "1.1.90",
-    "@fatih_ergun/kg-clean-basic-html": "4.1.4",
-    "@fatih_ergun/kg-converters": "1.0.7",
-    "@fatih_ergun/kg-default-nodes": "1.0.0",
-    "@fatih_ergun/kg-default-transforms": "1.1.22",
-    "@fatih_ergun/kg-markdown-html-renderer": "7.0.7",
-    "@fatih_ergun/kg-simplemde": "3.0.5",
-    "@fatih_ergun/kg-unsplash-selector": "0.2.6",
+    "@fatih_ergun/kg-clean-basic-html": "^1.0.0",
+    "@fatih_ergun/kg-converters": "^1.0.0",
+    "@fatih_ergun/kg-default-nodes": "^1.0.0",
+    "@fatih_ergun/kg-default-transforms": "^1.0.0",
+    "@fatih_ergun/kg-markdown-html-renderer": "^1.0.0",
+    "@fatih_ergun/kg-simplemde": "^1.0.0",
+    "@fatih_ergun/kg-unsplash-selector": "^1.0.0",
     "clsx": "^2.0.0",
     "codemirror": "^6.0.1",
     "cross-fetch": "^4.0.0",

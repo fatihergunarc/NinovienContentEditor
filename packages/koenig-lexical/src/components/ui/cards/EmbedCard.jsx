@@ -1,4 +1,4 @@
-import '@tryghost/kg-simplemde/dist/simplemde.min.css';
+import '@fatih_ergun/kg-simplemde/dist/simplemde.min.css';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {CardCaptionEditor} from '../CardCaptionEditor';

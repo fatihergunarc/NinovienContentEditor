@@ -1,5 +1,5 @@
 import Portal from '../Portal';
-import {UnsplashSearchModal} from '@tryghost/kg-unsplash-selector'; 
+import {UnsplashSearchModal} from '@fatih_ergun/kg-unsplash-selector'; 
 
 const UnsplashModal = ({unsplashConf, onImageInsert, onClose}) => {
     return (

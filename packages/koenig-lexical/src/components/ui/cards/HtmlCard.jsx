@@ -1,4 +1,4 @@
-import '@tryghost/kg-simplemde/dist/simplemde.min.css';
+import '@fatih_ergun/kg-simplemde/dist/simplemde.min.css';
 import HtmlEditor from './HtmlCard/HtmlEditor';
 import KoenigComposerContext from '../../../context/KoenigComposerContext.jsx';
 import PropTypes from 'prop-types';

@@ -4,10 +4,10 @@ import HeaderNodeComponentV1 from './header/v1/HeaderNodeComponent';
 import KoenigCardWrapper from '../components/KoenigCardWrapper';
 import MINIMAL_NODES from './MinimalNodes';
 import React from 'react';
-import cleanBasicHtml from '@tryghost/kg-clean-basic-html';
+import cleanBasicHtml from '@fatih_ergun/kg-clean-basic-html';
 import {$canShowPlaceholderCurry} from '@lexical/text';
 import {$generateHtmlFromNodes} from '@lexical/html';
-import {HeaderNode as BaseHeaderNode} from '@tryghost/kg-default-nodes';
+import {HeaderNode as BaseHeaderNode} from '@fatih_ergun/kg-default-nodes';
 import {createCommand} from 'lexical';
 import {populateNestedEditor, setupNestedEditor} from '../utils/nested-editors';
 

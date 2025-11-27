@@ -1,8 +1,8 @@
 import CollectionCardIcon from '../assets/icons/kg-card-type-collection.svg?react';
 import React from 'react';
-import cleanBasicHtml from '@tryghost/kg-clean-basic-html';
+import cleanBasicHtml from '@fatih_ergun/kg-clean-basic-html';
 import {$generateHtmlFromNodes} from '@lexical/html';
-import {CollectionNode as BaseCollectionNode} from '@tryghost/kg-default-nodes';
+import {CollectionNode as BaseCollectionNode} from '@fatih_ergun/kg-default-nodes';
 import {CollectionNodeComponent} from './CollectionNodeComponent';
 import {KoenigCardWrapper, MINIMAL_NODES} from '../index.js';
 import {createCommand} from 'lexical';

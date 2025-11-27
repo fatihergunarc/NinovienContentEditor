@@ -11,7 +11,7 @@ import {
     $isZWNJNode,
     AtLinkNode,
     AtLinkSearchNode
-} from '@tryghost/kg-default-nodes';
+} from '@fatih_ergun/kg-default-nodes';
 import {$createBookmarkNode} from '../nodes/BookmarkNode';
 import {$createLinkNode} from '@lexical/link';
 import {

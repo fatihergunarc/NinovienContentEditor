@@ -1,6 +1,6 @@
 import React from 'react';
 import {$getSelection, $isParagraphNode, $isRangeSelection, $isTextNode, COMMAND_PRIORITY_LOW, KEY_MODIFIER_COMMAND} from 'lexical';
-import {$isAtLinkSearchNode} from '@tryghost/kg-default-nodes';
+import {$isAtLinkSearchNode} from '@fatih_ergun/kg-default-nodes';
 import {$isLinkNode} from '@lexical/link';
 import {FloatingFormatToolbar, toolbarItemTypes} from '../components/ui/FloatingFormatToolbar';
 import {FloatingLinkToolbar} from '../components/ui/FloatingLinkToolbar';
