@@ -14,6 +14,7 @@ const KoenigCardWrapper = ({nodeKey, width, wrapperStyle, IndicatorIcon, childre
     const [cardWidth, setCardWidth] = React.useState(width || 'regular');
     const containerRef = React.useRef(null);
     const skipClick = React.useRef(false);
+    const isEditable = editor.isEditable();
 
     const {selectedCardKey, isEditingCard, isDragging} = useKoenigSelectedCardContext();
 
@@ -43,10 +44,12 @@ const KoenigCardWrapper = ({nodeKey, width, wrapperStyle, IndicatorIcon, childre
                         const clickedDifferentEditor = !cardNode;
                         const clickedToolbar = event.target.closest('[data-kg-allow-clickthrough="false"]');
 
-                        if (isSelected && (cardNode?.hasEditMode?.() && !isEditing && !clickedToolbar)) {
-                            editor.dispatchCommand(EDIT_CARD_COMMAND, {cardKey: nodeKey, focusEditor: !clickedDifferentEditor});
-                        } else if (!isSelected) {
-                            editor.dispatchCommand(SELECT_CARD_COMMAND, {cardKey: nodeKey, focusEditor: !clickedDifferentEditor});
+                        if (isEditable) {
+                            if (isSelected && (cardNode?.hasEditMode?.() && !isEditing && !clickedToolbar)) {
+                                editor.dispatchCommand(EDIT_CARD_COMMAND, {cardKey: nodeKey, focusEditor: !clickedDifferentEditor});
+                            } else if (!isSelected) {
+                                editor.dispatchCommand(SELECT_CARD_COMMAND, {cardKey: nodeKey, focusEditor: !clickedDifferentEditor});
+                            }
                         }
 
                         if (clickedDifferentEditor) {

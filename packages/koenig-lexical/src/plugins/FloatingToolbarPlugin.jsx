@@ -15,11 +15,18 @@ export default function FloatingToolbarPlugin({anchorElem = document.body, isSni
 function useFloatingFormatToolbar(editor, anchorElem, isSnippetsEnabled, hiddenFormats = []) {
     const [toolbarItemType, setToolbarItemType] = React.useState(null);
     const [href, setHref] = React.useState(null);
+    const isEditable = editor.isEditable();
 
     const setToolbarType = React.useCallback(() => {
         editor.getEditorState().read(() => {
             // Should not to pop up the floating toolbar when using IME input
             if (editor.isComposing()) {
+                return;
+            }
+
+            // Don't show toolbar when editor is not editable
+            if (!isEditable) {
+                setToolbarItemType(null);
                 return;
             }
 
@@ -65,7 +72,7 @@ function useFloatingFormatToolbar(editor, anchorElem, isSnippetsEnabled, hiddenF
 
             setToolbarItemType(null);
         });
-    }, [editor, toolbarItemType]);
+    }, [editor, toolbarItemType, isEditable]);
 
     React.useEffect(() => {
         // Add a listener if the text toolbar is active. It helps to prevent events bubbling

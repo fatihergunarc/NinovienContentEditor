@@ -34,6 +34,18 @@
     ::selection {
         background: var(--grey-300);
     }
+
+    /* Hide decorator node selection outline when not editable */
+    [contenteditable="false"] {
+        .kg-card-wrapper {
+            outline: none !important;
+        }
+
+        /* Lexical applies outline to decorator nodes when selected */
+        [data-lexical-decorator] {
+            outline: none !important;
+        }
+    }
 }
 
 /* Dark mode */

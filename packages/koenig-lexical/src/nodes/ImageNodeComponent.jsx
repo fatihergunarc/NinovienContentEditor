@@ -28,6 +28,7 @@ export function ImageNodeComponent({nodeKey, initialFile, src, altText, captionE
     const fileInputRef = React.useRef();
     const toolbarFileInputRef = React.useRef();
     const [showSnippetToolbar, setShowSnippetToolbar] = React.useState(false);
+    const isEditable = editor.isEditable();
 
     const imageUploader = fileUploader.useFileUpload('image');
     const imageFileDragHandler = useFileDragAndDrop({handleDrop: handleImageDrop});
@@ -214,6 +215,7 @@ export function ImageNodeComponent({nodeKey, initialFile, src, altText, captionE
                 imageCardDragHandler={imageCardDragHandler}
                 imageFileDragHandler={imageFileDragHandler}
                 imageUploader={imageUploader}
+                isEditable={isEditable}
                 isPinturaEnabled={isPinturaEnabled}
                 isSelected={isSelected}
                 openImageEditor={openImageEditor}
@@ -225,7 +227,7 @@ export function ImageNodeComponent({nodeKey, initialFile, src, altText, captionE
 
             <ActionToolbar
                 data-kg-card-toolbar="image"
-                isVisible={showLink}
+                isVisible={isEditable && showLink}
             >
                 <LinkInput
                     cancel={cancelLinkAndReselect}
@@ -239,14 +241,14 @@ export function ImageNodeComponent({nodeKey, initialFile, src, altText, captionE
 
             <ActionToolbar
                 data-kg-card-toolbar="image"
-                isVisible={showSnippetToolbar}
+                isVisible={isEditable && showSnippetToolbar}
             >
                 <SnippetActionToolbar onClose={() => setShowSnippetToolbar(false)} />
             </ActionToolbar>
 
             <ActionToolbar
                 data-kg-card-toolbar="image"
-                isVisible={src && isSelected && !showLink && !showSnippetToolbar}
+                isVisible={isEditable && src && isSelected && !showLink && !showSnippetToolbar}
             >
                 <ImageUploadForm
                     fileInputRef={toolbarFileInputRef}

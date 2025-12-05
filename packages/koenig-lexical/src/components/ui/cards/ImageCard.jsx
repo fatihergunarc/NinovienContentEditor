@@ -145,6 +145,7 @@ export function ImageCard({
     imageUploader,
     imageCardDragHandler,
     imageFileDragHandler,
+    isEditable = true,
     isPinturaEnabled,
     openImageEditor
 }) {
@@ -163,7 +164,7 @@ export function ImageCard({
     };
     return (
         <>
-            <figure ref={figureRef} data-kg-card-width={cardWidth}>
+            <figure ref={figureRef} data-kg-card-editable={isEditable} data-kg-card-width={cardWidth}>
                 <ImageHolder
                     altText={altText}
                     imageCardDragHandler={imageCardDragHandler}
@@ -176,17 +177,19 @@ export function ImageCard({
                     src={src}
                     onFileChange={onFileChange}
                 />
-                <CardCaptionEditor
-                    altText={altText || ''}
-                    altTextPlaceholder="Type alt text for image (optional)"
-                    captionEditor={captionEditor}
-                    captionEditorInitialState={captionEditorInitialState}
-                    captionPlaceholder="Type caption for image (optional)"
-                    dataTestId="image-caption-editor"
-                    isSelected={isSelected}
-                    readOnly={!isSelected}
-                    setAltText={setAltText}
-                />
+                {isEditable && (
+                    <CardCaptionEditor
+                        altText={altText || ''}
+                        altTextPlaceholder="Type alt text for image (optional)"
+                        captionEditor={captionEditor}
+                        captionEditorInitialState={captionEditorInitialState}
+                        captionPlaceholder="Type caption for image (optional)"
+                        dataTestId="image-caption-editor"
+                        isSelected={isSelected}
+                        readOnly={!isSelected}
+                        setAltText={setAltText}
+                    />
+                )}
             </figure>
         </>
     );
@@ -239,6 +242,7 @@ ImageCard.propTypes = {
     imageUploader: PropTypes.object,
     imageFileDragHandler: PropTypes.object,
     imageCardDragHandler: PropTypes.object,
+    isEditable: PropTypes.bool,
     isPinturaEnabled: PropTypes.bool,
     openImageEditor: PropTypes.func
 };
