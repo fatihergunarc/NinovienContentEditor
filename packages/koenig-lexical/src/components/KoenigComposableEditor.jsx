@@ -38,6 +38,7 @@ const KoenigComposableEditor = ({
     placeholderClassName = '',
     className = '',
     readOnly = false,
+    editable = true,
     isDragEnabled = true,
     inheritStyles = false,
     isSnippetsEnabled = true,
@@ -50,7 +51,8 @@ const KoenigComposableEditor = ({
     const {editorContainerRef, darkMode, isTKEnabled} = React.useContext(KoenigComposerContext);
 
     const isNested = !!editor._parentEditor;
-    const isDragReorderEnabled = isDragEnabled && !readOnly && !isNested;
+    const isReadOnly = readOnly || !editable;
+    const isDragReorderEnabled = isDragEnabled && !isReadOnly && !isNested;
 
     const {onChange: sharedOnChange} = useSharedOnChangeContext();
     const _onChange = React.useCallback((editorState) => {
@@ -96,7 +98,7 @@ const KoenigComposableEditor = ({
             <RichTextPlugin
                 contentEditable={
                     <div ref={onContentEditableRef} data-kg="editor">
-                        <ContentEditable className="kg-prose" readOnly={readOnly} />
+                        <ContentEditable className="kg-prose" readOnly={isReadOnly} />
                     </div>
                 }
                 ErrorBoundary={KoenigErrorBoundary}

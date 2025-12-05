@@ -1,6 +1,6 @@
 {
   "name": "@fatih_ergun/koenig-lexical",
-  "version": "1.0.3",
+  "version": "1.1.3",
   "author": "Fatih Ergun",
   "license": "MIT",
   "type": "module",
@@ -19,7 +19,8 @@
       "import": "./dist/koenig-lexical.js",
       "require": "./dist/koenig-lexical.umd.js"
     },
-    "./index.css": "./dist/index.css"
+    "./index.css": "./dist/index.css",
+    "./koenig-lexical.css": "./dist/index.css"
   },
   "scripts": {
     "dev": "concurrently \"vite --host --force\" \"yarn build --watch\" \"yarn preview -l silent --host\" \"yarn workspace @tryghost/kg-default-nodes dev\" \"yarn workspace @tryghost/kg-default-transforms dev\"",

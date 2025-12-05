@@ -36,6 +36,7 @@ const KoenigComposer = ({
     multiplayerDebug = true,
     multiplayerDocId,
     multiplayerUsername,
+    editable = true,
     children
 }) => {
     const initialConfig = React.useMemo(() => {
@@ -106,7 +107,7 @@ const KoenigComposer = ({
     }, [multiplayerEndpoint, multiplayerDocId, multiplayerDebug]);
 
     return (
-        <LexicalComposer initialConfig={initialConfig}>
+        <LexicalComposer initialConfig={{...initialConfig, editable}}>
             <KoenigComposerContext.Provider value={{
                 fileUploader,
                 editorContainerRef,

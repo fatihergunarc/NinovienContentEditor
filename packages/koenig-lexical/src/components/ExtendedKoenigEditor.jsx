@@ -1,8 +1,20 @@
 import KoenigEditor from './KoenigEditor';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {$getRoot, $isDecoratorNode} from 'lexical';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 
-function ExtendedKoenigEditor() {
+// Plugin to control editable state
+function EditablePlugin({editable}) {
+    const [editor] = useLexicalComposerContext();
+
+    useEffect(() => {
+        editor.setEditable(editable);
+    }, [editor, editable]);
+
+    return null;
+}
+
+function ExtendedKoenigEditor({editable = true}) {
     const skipFocusEditor = React.useRef(false);
 
     const [editorAPI, setEditorAPI] = useState(null);
@@ -95,6 +107,7 @@ function ExtendedKoenigEditor() {
                         darkMode={false}
                         registerAPI={setEditorAPI}
                     >
+                        <EditablePlugin editable={editable} />
                     </KoenigEditor>
                 </div>
             </div>
