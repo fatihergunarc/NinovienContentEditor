@@ -43,17 +43,17 @@ export class EmbedNode extends BaseEmbedNode {
         priority: 1,
         shortcut: '/youtube [url]'
     },
-    {
-        section: 'Embeds',
-        label: 'X (formerly Twitter)',
-        desc: '/twitter [tweet url]',
-        Icon: XIcon,
-        insertCommand: INSERT_EMBED_COMMAND,
-        queryParams: ['url'],
-        matches: ['twitter', 'x'],
-        priority: 2,
-        shortcut: '/twitter [url]'
-    },
+    // {
+    //     section: 'Embeds',
+    //     label: 'X (formerly Twitter)',
+    //     desc: '/twitter [tweet url]',
+    //     Icon: XIcon,
+    //     insertCommand: INSERT_EMBED_COMMAND,
+    //     queryParams: ['url'],
+    //     matches: ['twitter', 'x'],
+    //     priority: 2,
+    //     shortcut: '/twitter [url]'
+    // },
     {
         section: 'Embeds',
         label: 'Vimeo',
