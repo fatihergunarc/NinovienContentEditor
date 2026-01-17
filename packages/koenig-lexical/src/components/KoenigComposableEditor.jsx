@@ -51,7 +51,8 @@ const KoenigComposableEditor = ({
     const {editorContainerRef, darkMode, isTKEnabled} = React.useContext(KoenigComposerContext);
 
     const isNested = !!editor._parentEditor;
-    const isReadOnly = readOnly || !editable;
+    const isEditable = editor.isEditable();
+    const isReadOnly = readOnly || !editable || !isEditable;
     const isDragReorderEnabled = isDragEnabled && !isReadOnly && !isNested;
 
     const {onChange: sharedOnChange} = useSharedOnChangeContext();
@@ -102,7 +103,7 @@ const KoenigComposableEditor = ({
                     </div>
                 }
                 ErrorBoundary={KoenigErrorBoundary}
-                placeholder={placeholder || <EditorPlaceholder className={placeholderClassName} text={placeholderText} />}
+                placeholder={isReadOnly ? null : (placeholder || <EditorPlaceholder className={placeholderClassName} text={placeholderText} />)}
             />
             <LinkPlugin />
             <OnChangePlugin ignoreHistoryMergeTagChange={false} ignoreSelectionChange={true} onChange={_onChange} />

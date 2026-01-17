@@ -263,5 +263,10 @@ function usePlusCardMenu(editor) {
 
 export default function PlusCardMenuPlugin() {
     const [editor] = useLexicalComposerContext();
+
+    if (!editor.isEditable()) {
+        return null;
+    }
+
     return usePlusCardMenu(editor);
 }

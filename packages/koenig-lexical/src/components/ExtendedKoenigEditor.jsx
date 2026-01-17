@@ -101,7 +101,7 @@ function ExtendedKoenigEditor({editable = true}) {
     return (
         <div className="koenig-demo relative h-full grow" style={{height: '100vh'}}>
             <div ref={containerRef} className="h-full overflow-auto overflow-x-hidden" onClick={focusEditor} onMouseDown={maybeSkipFocusEditor}>
-                <div className="mx-auto max-w-[740px] px-6 py-[15vmin] lg:px-0">
+                <div className="mx-auto max-w-[740px] px-6 lg:px-0" style={{paddingTop:"2px"}}>
                     <KoenigEditor
                         cursorDidExitAtTop={false}
                         darkMode={false}

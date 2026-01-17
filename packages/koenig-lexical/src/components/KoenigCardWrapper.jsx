@@ -148,6 +148,7 @@ const KoenigCardWrapper = ({nodeKey, width, wrapperStyle, IndicatorIcon, childre
                 cardWidth={width}
                 IndicatorIcon={IndicatorIcon}
                 isDragging={isDragging}
+                isEditable={isEditable}
                 isEditing={isEditing}
                 isSelected={isSelected}
                 wrapperStyle={wrapperStyle}

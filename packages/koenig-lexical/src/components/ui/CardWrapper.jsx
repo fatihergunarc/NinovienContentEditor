@@ -15,6 +15,7 @@ export const CardWrapper = React.forwardRef(({
     cardWidth,
     IndicatorIcon,
     isDragging,
+    isEditable = true,
     isEditing,
     isSelected,
     onClick,
@@ -37,8 +38,8 @@ export const CardWrapper = React.forwardRef(({
     const className = [
         'relative border-transparent caret-grey-800',
         isSelected ? 'z-20' : 'z-10', // ensure setting panels sit above other cards
-        isSelected && !isDragging ? 'shadow-[0_0_0_2px] shadow-green' : '',
-        !isSelected && !isDragging ? 'hover:shadow-[0_0_0_1px] hover:shadow-green' : '',
+        isEditable && isSelected && !isDragging ? 'shadow-[0_0_0_2px] shadow-green' : '',
+        isEditable && !isSelected && !isDragging ? 'hover:shadow-[0_0_0_1px] hover:shadow-green' : '',
         CARD_WIDTH_CLASSES[cardWidth] || '',
         wrapperClass()
     ].join(' ');
@@ -68,6 +69,7 @@ CardWrapper.displayName = 'CardWrapper';
 
 CardWrapper.propTypes = {
     isSelected: PropTypes.bool,
+    isEditable: PropTypes.bool,
     isEditing: PropTypes.bool,
     cardWidth: PropTypes.oneOf(['regular', 'wide', 'full']),
     icon: PropTypes.string
