@@ -1,6 +1,6 @@
 ## Development  
 
-Lokal ortamda projeyi test etmek için aşağıdaki adımları takip edebilirsiniz:
+Lokal ortamda projeyi test etmek için aşağıdaki adımları takip edebilirsiniz :
 
 ### 1. Projeyi Kurun
 Ana klasörde aşağıdaki komutu çalıştırarak gerekli bağımlılıkları yükleyin:  
