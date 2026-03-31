@@ -1,0 +1,50 @@
+name: Publish koenig-lexical
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/koenig-lexical/**'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: yarn
+        working-directory: packages/koenig-lexical
+
+      - name: Build
+        run: yarn build
+        working-directory: packages/koenig-lexical
+
+      - name: Bump minor version
+        id: bump
+        run: |
+          cd packages/koenig-lexical
+          npm version patch --no-git-tag-version
+          echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/koenig-lexical/package.json
+          git commit -m "chore: bump koenig-lexical to v${{ steps.bump.outputs.version }}"
+          git push
+
+      - name: Publish to npm
+        run: npm publish --access public
+        working-directory: packages/koenig-lexical
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
