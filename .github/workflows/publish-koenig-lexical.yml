@@ -21,10 +21,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: yarn install --no-frozen-lockfile
+        run: npm install
+        working-directory: packages/koenig-lexical
 
       - name: Build
-        run: yarn workspace @fatih_ergun/koenig-lexical build
+        run: npm run build
+        working-directory: packages/koenig-lexical
 
       - name: Bump patch version
         id: bump
