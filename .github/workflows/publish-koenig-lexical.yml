@@ -21,7 +21,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps --ignore-scripts
+        run: npm install --legacy-peer-deps --ignore-scripts --no-workspaces
         working-directory: packages/koenig-lexical
 
       - name: Build
@@ -44,7 +44,7 @@ jobs:
           git push
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: npm publish --access public --ignore-scripts
         working-directory: packages/koenig-lexical
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
