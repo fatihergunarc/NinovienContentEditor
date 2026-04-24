@@ -78,7 +78,7 @@ export class EmbedNode extends BaseEmbedNode {
     },
     {
         section: 'Embeds',
-        label: 'Spotify',
+        label: 'Spotify2',
         desc: '/spotify [track or playlist url]',
         Icon: SpotifyIcon,
         insertCommand: INSERT_EMBED_COMMAND,

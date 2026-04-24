@@ -210,7 +210,7 @@ const DesignSandbox = () => {
                 <CardMenuItem desc="/unsplash [search-term or url]" Icon={UnsplashCardIcon} label="Unsplash" />
                 <CardMenuItem desc="/vimeo [video url]" Icon={VimeoCardIcon} label="Vimeo" />
                 <CardMenuItem desc="/codepen [pen url]" Icon={CodepenCardIcon} label="CodePen" />
-                <CardMenuItem desc="/spotify [track or playlist url]" Icon={SpotifyCardIcon} label="Spotify" />
+                <CardMenuItem desc="/spotify [track or playlist url]" Icon={SpotifyCardIcon} label="Spotify2" />
                 <CardMenuItem desc="/soundcloud [track or playlist url]" Icon={SoundcloudCardIcon} label="SoundCloud" />
                 <CardMenuItem desc="/nft [opensea url]" Icon={NftCardIcon} label="NFT" />
                 <CardMenuItem desc="/embed [url]" Icon={OtherCardIcon} label="Other..." />
