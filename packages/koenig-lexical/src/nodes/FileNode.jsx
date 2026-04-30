@@ -20,7 +20,7 @@ export class FileNode extends BaseFileNode {
             triggerFileDialog: true
         },
         matches: ['file'],
-        priority: 15,
+        priority: 4,
         shortcut: '/file'
     }];
 

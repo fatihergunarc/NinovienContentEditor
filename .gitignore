@@ -76,3 +76,10 @@ typings/
 
 # Playwright report
 playwright-report/
+.playwright-mcp/
+# Test screenshot artifacts (kök dizine kaydedilenler)
+/*.jpeg
+/*.png
+
+# Claude
+.claude/

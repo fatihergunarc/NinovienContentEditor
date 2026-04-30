@@ -10,55 +10,18 @@ import {ToolbarMenu, ToolbarMenuItem, ToolbarMenuSeparator} from '../components/
 import {sanitizeHtml} from '../utils/sanitize-html';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 
-export function CalloutNodeComponent({nodeKey, textEditor, textEditorInitialState, backgroundColor, calloutEmoji}) {
+export function CalloutNodeComponent({nodeKey, textEditor, textEditorInitialState, backgroundColor}) {
     const [editor] = useLexicalComposerContext();
 
-    const {isSelected, isEditing, setEditing} = React.useContext(CardContext);
+    const {isSelected, isEditing} = React.useContext(CardContext);
     const {cardConfig} = React.useContext(KoenigComposerContext);
-    const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
     const [showSnippetToolbar, setShowSnippetToolbar] = React.useState(false);
-    const [emoji, setEmoji] = React.useState(calloutEmoji);
-    const [hasEmoji, setHasEmoji] = React.useState(calloutEmoji ? true : false);
-
-    const toggleEmoji = (event) => {
-        event.stopPropagation();
-        setEditing(true); // keep card selected when toggling emoji (else we lose the settings pane on deselection)
-        editor.update(() => {
-            const node = $getNodeByKey(nodeKey);
-            setHasEmoji(event.target.checked);
-            if (event.target.checked && emoji === '') {
-                node.calloutEmoji = '💡';
-            } else {
-                node.calloutEmoji = event.target.checked ? emoji : '';
-            }
-        });
-    };
 
     const handleColorChange = (color) => {
         editor.update(() => {
             const node = $getNodeByKey(nodeKey);
             node.backgroundColor = color;
         });
-    };
-
-    const handleEmojiChange = (event) => {
-        editor.update(() => {
-            const node = $getNodeByKey(nodeKey);
-            setEmoji(event.native);
-            node.calloutEmoji = event.native;
-            toggleEmojiPicker();
-        });
-    };
-
-    const toggleEmojiPicker = () => {
-        if (!isEditing) {
-            setEditing(true);
-        }
-
-        if (showEmojiPicker) {
-            textEditor.focus();
-        }
-        setShowEmojiPicker(!showEmojiPicker);
     };
 
     const handleToolbarEdit = (event) => {
@@ -74,20 +37,13 @@ export function CalloutNodeComponent({nodeKey, textEditor, textEditorInitialStat
     return (
         <>
             <CalloutCard
-                calloutEmoji={calloutEmoji}
-                changeEmoji={handleEmojiChange}
                 color={backgroundColor}
                 handleColorChange={handleColorChange}
-                hasEmoji={hasEmoji}
                 isEditing={isEditing}
                 nodeKey={nodeKey}
                 sanitizeHtml={sanitizeHtml}
-                setShowEmojiPicker={setShowEmojiPicker}
-                showEmojiPicker={showEmojiPicker}
                 textEditor={textEditor}
                 textEditorInitialState={textEditorInitialState}
-                toggleEmoji={toggleEmoji}
-                toggleEmojiPicker={toggleEmojiPicker}
             />
             <ActionToolbar
                 data-kg-card-toolbar="callout"
