@@ -1,9 +1,8 @@
-import EmojiPickerPortal from '../EmojiPickerPortal';
 import KoenigComposerContext from '../../../context/KoenigComposerContext.jsx';
 import KoenigNestedEditor from '../../KoenigNestedEditor';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ColorOptionSetting, SettingsPanel, ToggleSetting} from '../SettingsPanel';
+import {ColorOptionSetting, SettingsPanel} from '../SettingsPanel';
 import {ReadOnlyOverlay} from '../ReadOnlyOverlay';
 
 export const CALLOUT_COLORS = {
@@ -85,52 +84,16 @@ export const calloutColorPicker = [
 export function CalloutCard({
     color,
     isEditing,
-    setShowEmojiPicker,
-    toggleEmoji,
-    hasEmoji,
     handleColorChange,
-    changeEmoji,
-    calloutEmoji,
     textEditor,
     textEditorInitialState,
-    nodeKey,
-    toggleEmojiPicker,
-    showEmojiPicker
+    nodeKey
 }) {
-    const emojiButtonRef = React.useRef(null);
     const {darkMode} = React.useContext(KoenigComposerContext);
-
-    React.useEffect(() => {
-        if (!isEditing) {
-            setShowEmojiPicker(false);
-        }
-    }, [isEditing, setShowEmojiPicker]);
 
     return (
         <>
             <div className={`flex rounded-md border px-7 py-5 ${CALLOUT_COLORS[color]} `} data-testid={`callout-bg-${color}`}>
-                <div>
-                    {hasEmoji &&
-                    <>
-                        <button
-                            ref={emojiButtonRef}
-                            className={`mr-2 cursor-pointer rounded-md px-2 text-xl ${isEditing ? 'hover:bg-grey-500/20' : ''} ` }
-                            data-testid="emoji-picker-button"
-                            type="button"
-                            onClick={toggleEmojiPicker}
-                        >
-                            {calloutEmoji}
-                        </button>
-                        {
-                            isEditing && showEmojiPicker && (
-                                <EmojiPickerPortal
-                                    positionRef={emojiButtonRef}
-                                    togglePortal={toggleEmojiPicker}
-                                    onEmojiClick={changeEmoji} />
-                            )
-                        }
-                    </>}
-                </div>
                 <KoenigNestedEditor
                     autoFocus={true}
                     defaultKoenigEnterBehaviour={true}
@@ -148,12 +111,6 @@ export function CalloutCard({
                     <SettingsPanel
                         darkMode={darkMode}
                     >
-                        <ToggleSetting
-                            dataTestId='emoji-toggle'
-                            isChecked={!!calloutEmoji}
-                            label='Emoji'
-                            onChange={toggleEmoji}
-                        />
                         <ColorOptionSetting
                             buttons={calloutColorPicker}
                             dataTestId='callout-color-picker'
@@ -174,24 +131,15 @@ export function CalloutCard({
 CalloutCard.propTypes = {
     color: PropTypes.oneOf(['grey', 'white', 'blue', 'green', 'yellow', 'red', 'pink', 'purple', 'accent']),
     text: PropTypes.string,
-    hasEmoji: PropTypes.bool,
     placeholder: PropTypes.string,
     isEditing: PropTypes.bool,
     updateText: PropTypes.func,
-    calloutEmoji: PropTypes.string,
-    setShowEmojiPicker: PropTypes.func,
-    toggleEmoji: PropTypes.func,
     handleColorChange: PropTypes.func,
-    changeEmoji: PropTypes.func,
     textEditor: PropTypes.object,
     textEditorInitialState: PropTypes.object,
-    nodeKey: PropTypes.string,
-    toggleEmojiPicker: PropTypes.func,
-    showEmojiPicker: PropTypes.bool
+    nodeKey: PropTypes.string
 };
 
 CalloutCard.defaultProps = {
-    color: 'green',
-    calloutEmoji: '💡',
-    hasEmoji: true
+    color: 'green'
 };

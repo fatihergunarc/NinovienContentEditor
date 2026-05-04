@@ -6,7 +6,7 @@ import {renderButtonNode} from './button-renderer';
 export class ButtonNode extends generateDecoratorNode({nodeType: 'button',
     properties: [
         {name: 'buttonText', default: ''},
-        {name: 'alignment', default: 'center'},
+        {name: 'alignment', default: 'left'},
         {name: 'buttonUrl', default: '', urlType: 'url'}
     ]}
 ) {

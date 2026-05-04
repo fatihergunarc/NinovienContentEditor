@@ -21,7 +21,7 @@ export class CalloutNode extends BaseCalloutNode {
         Icon: CalloutCardIcon,
         insertCommand: INSERT_CALLOUT_COMMAND,
         matches: ['callout'],
-        priority: 11,
+        priority: 3,
         shortcut: '/callout'
     }];
 
@@ -31,6 +31,10 @@ export class CalloutNode extends BaseCalloutNode {
 
     constructor(dataset = {}, key) {
         super(dataset, key);
+
+        // Customization (Ninovien): emoji feature removed. Force empty so importDOM/imported
+        // mobiledoc with calloutEmoji set is normalized away, and renderer skips emoji div.
+        this.__calloutEmoji = '';
 
         // set up nested editor instances
         setupNestedEditor(this, '__calloutTextEditor', {editor: dataset.calloutTextEditor, nodes: MINIMAL_NODES});
@@ -73,7 +77,6 @@ export class CalloutNode extends BaseCalloutNode {
             <KoenigCardWrapper nodeKey={this.getKey()}>
                 <CalloutNodeComponent
                     backgroundColor={this.backgroundColor}
-                    calloutEmoji={this.calloutEmoji}
                     nodeKey={this.getKey()}
                     textEditor={this.__calloutTextEditor}
                     textEditorInitialState={this.__calloutTextEditorInitialState}

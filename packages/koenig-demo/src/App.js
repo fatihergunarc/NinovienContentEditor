@@ -1,4 +1,7 @@
 import './App.css';
+// HTML render CSS — kütüphane statik card sınıflarına stil sağlamadığı için "theme" rolünü biz oynuyoruz.
+// NinovienClient view tarafında da bu dosya aynen kullanılmalı.
+import './kg-standart.css';
 import {KonigComposerDemo} from './Demo'
 import React from 'react';
 

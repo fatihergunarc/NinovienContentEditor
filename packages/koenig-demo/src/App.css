@@ -2,3 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* App.css — yalnızca demo layout/iskelet. Card render CSS'i `kg-standart.css`'tedir. */
+
+html, body, #root {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #e7e9eb;
+    overflow-x: hidden;
+}
+
+/* Kütüphanenin Ninovien wrapper'ı (`.koenig-demo`) `height: 100vh` zorluyor; demo flex'ine uyum için 100%. */
+.koenig-lexical > .koenig-demo {
+    height: auto !important;
+    min-height: 100% !important;
+}
+
+/* ActionToolbar `absolute; top:-46px` ile card'ın üstüne taşıyor. Hem kütüphanenin scroll container'ı
+   (`containerRef`) hem demo wrapper kırpıyordu. Tüm overflow zincirini visible yapıyoruz; scroll
+   window'a düşüyor, üst toolbar sticky ile sabit kalıyor. */
+.koenig-demo > .h-full.overflow-auto {
+    overflow: visible !important;
+    height: auto !important;
+}

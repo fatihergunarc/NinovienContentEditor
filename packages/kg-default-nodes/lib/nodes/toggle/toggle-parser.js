@@ -9,7 +9,10 @@ export function parseToggleNode(ToggleNode) {
                         const heading = headingNode.textContent;
 
                         const contentNode = domNode.querySelector('.kg-toggle-content');
-                        const content = contentNode.textContent;
+                        // innerHTML (not textContent) so <p>, <ul>/<li>, <strong>, <em>, <a>
+                        // structure is preserved when populateNestedEditor → $generateNodesFromDOM
+                        // re-parses it. textContent flattens to a single text run, losing formatting.
+                        const content = contentNode.innerHTML.trim();
 
                         const payload = {
                             heading,

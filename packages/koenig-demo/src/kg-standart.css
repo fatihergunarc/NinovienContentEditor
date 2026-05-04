@@ -1,0 +1,498 @@
+/* kg-standart.css — Koenig HTML render CSS
+ *
+ * Bu dosya, `getHtml()` ile çıkan statik HTML'in görünümünü sağlar.
+ * Selector'ler scope'suz (`.kg-prose figure.kg-card` gibi) — NinovienClient view tarafına
+ * aynen kopyalanabilir. Editor decorator'leri `<figure>`, `<div class="kg-bookmark-card">` vb.
+ * etiketleri kullanmadığı için bu kurallar edit modunu etkilemez; yalnızca HTML render'a uygulanır.
+ *
+ * Ghost Source/Casper theme yaklaşımıyla aynı mimari: kütüphane semantic class'lar üretir,
+ * theme katmanı (bu dosya) görsel stili sağlar. */
+
+/* ─────────────────────────────────────────────────────────────────────
+   Image card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose figure.kg-card {
+    margin: 0;
+}
+.kg-prose figure.kg-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.kg-prose figure.kg-card figcaption {
+    margin-top: 0;
+    padding-top: 8px;
+    padding-bottom: 23px;
+    text-align: center;
+    color: rgb(98, 109, 121);
+    font-size: 14px;
+    line-height: 24px;
+}
+
+/* wide: viewport ortasında 75vw; ml = parent_50% - image_50%.
+   Header/Embed/Video gibi `<div>` cardlarda da kullanılabildiği için tag-agnostic.
+   `.kg-card` zincirlenmesi specificity'yi (0,3,0) yükseltir → `figure.kg-card { margin:0 }`
+   (0,2,1) kuralının margin-left/right override'ını yener. */
+.kg-prose .kg-card.kg-width-wide {
+    width: 75vw;
+    max-width: none;
+    margin-left: calc(50% - 37.5vw);
+    margin-right: calc(50% - 37.5vw);
+}
+
+/* full: viewport tam genişliği; ml = 50% - 50vw. */
+.kg-prose .kg-card.kg-width-full {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+/* figure ↔ paragraf geçiş margin'leri (Lexical DnD wrapper davranışını taklit eder). */
+.kg-prose figure.kg-card + p { margin-top: 28px; }
+.kg-prose p + figure.kg-card { margin-top: 28px; }
+
+/* ─────────────────────────────────────────────────────────────────────
+   HR
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose hr {
+    border: 0;
+    height: 1px;
+    background: #e5e7eb;
+    margin-top: 0;
+    margin-bottom: 49px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Pre / inline code
+   Kütüphanenin :where(code) inline-code için border/bg/radius veriyor;
+   bu pre içinde "ikinci kutu" yaratıyor. Sıfırlıyoruz.
+   ───────────────────────────────────────────────────────────────────── */
+
+.koenig-lexical .kg-prose pre,
+.koenig-lexical .kg-prose pre code {
+    font-size: 16px;
+}
+.koenig-lexical .kg-prose pre {
+    margin-top: 33px;
+    margin-bottom: 50px;
+    border-radius: 6px;
+    padding: 6px 8px;
+}
+.koenig-lexical .kg-prose pre code {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Bookmark card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose figure.kg-bookmark-card {
+    margin: 1.5em 0;
+    width: 100%;
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-container {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid rgba(124, 139, 154, 0.25);
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 148px;
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-title {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    color: rgb(21, 23, 26);
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-description {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgb(98, 109, 121);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-metadata {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: rgb(98, 109, 121);
+    gap: 6px;
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-thumbnail {
+    flex: 0 0 33%;
+    max-width: 240px;
+    position: relative;
+}
+.kg-prose figure.kg-bookmark-card .kg-bookmark-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Callout card
+
+   Renkler ve padding editör (CalloutCard.jsx + tailwind.config.cjs) ile
+   bire bir hizalandı: `bg-X/10` = palette renk @ %10 alpha; `px-7 py-5` =
+   padding 20px 28px. Bu sayede edit ↔ preview WYSIWYG.
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-callout-card {
+    display: flex;
+    padding: 20px 28px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    margin: 1.5em 0;
+    align-items: flex-start;
+    gap: 12px;
+}
+.kg-prose div.kg-callout-card-grey   { background: rgba(171, 180, 190, 0.1); }
+.kg-prose div.kg-callout-card-green  { background: rgba(48, 207, 67, 0.1); }
+.kg-prose div.kg-callout-card-blue   { background: rgba(20, 184, 255, 0.1); }
+.kg-prose div.kg-callout-card-purple { background: rgba(142, 66, 255, 0.1); }
+.kg-prose div.kg-callout-card-pink   { background: rgba(251, 45, 141, 0.1); }
+.kg-prose div.kg-callout-card-red    { background: rgba(245, 11, 35, 0.1); }
+.kg-prose div.kg-callout-card-yellow { background: rgba(255, 180, 31, 0.1); }
+.kg-prose div.kg-callout-card-white  { background: transparent; border-color: rgba(171, 180, 190, 0.3); }
+.kg-prose div.kg-callout-card-accent { background: var(--kg-accent-color, #ff0095); color: #ffffff; }
+.kg-prose div.kg-callout-card .kg-callout-text {
+    flex: 1;
+    font-size: 20px;
+    line-height: 1.5;
+    font-family: Georgia, serif;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Toggle card
+
+   Editör çıktısı: heading + icon button + content. Açma/kapama tamamen
+   `data-kg-toggle-state` attribute'una bağlı (close|open). Tüketici tarafın
+   küçük bir click handler'ı toggle'ı çevirmek zorunda (Ghost theme JS gibi);
+   demo'da Demo.js useEffect içinde bağlanıyor. Bu CSS sadece state'e göre
+   gizle/göster + okun dönüşünü yapar.
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-toggle-card {
+    border: 1px solid rgba(171, 180, 190, 0.4);
+    border-radius: 6px;
+    padding: 16px 24px;
+    margin: 1.5em 0;
+}
+.kg-prose div.kg-toggle-card .kg-toggle-heading {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+}
+.kg-prose div.kg-toggle-card .kg-toggle-heading-text {
+    /* Edit ile bire bir: 24px / 700 (heading-xsmall). */
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+    margin: 0;
+    flex: 1;
+    /* min-width: 0 → uzun başlık olduğunda h4 büzülür, ok content alanında kalır
+       (default min-width: auto ile h4 min-content kadar genişler ve okun overflow etmesine yol açar). */
+    min-width: 0;
+}
+.kg-prose div.kg-toggle-card .kg-toggle-card-icon {
+    /* Edit'teki size-8 (32×32) container + içinde 16×16 chevron pattern. */
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px;
+    width: 32px;
+    height: 32px;
+    color: rgb(171, 180, 190);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.kg-prose div.kg-toggle-card .kg-toggle-card-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 1.5px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.kg-prose div.kg-toggle-card .kg-toggle-content {
+    margin-top: 12px;
+    color: rgb(57, 64, 71);
+}
+.kg-prose div.kg-toggle-card[data-kg-toggle-state="close"] .kg-toggle-content {
+    display: none;
+}
+.kg-prose div.kg-toggle-card[data-kg-toggle-state="open"] .kg-toggle-card-icon {
+    transform: rotate(180deg);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Button card
+
+   Default alignment = left (Ninovien özelleştirmesi). Edit'te `<a>` üzerine
+   `not-kg-prose` class'ı eklenip kg-prose'un link rengi/altçizgisi bypass
+   ediliyor; preview'da bu class olmadığı için `.koenig-lexical` prefix ile
+   specificity'yi yükseltip kg-prose `a` kuralını yeniyoruz.
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-button-card {
+    margin: 1.5em 0;
+    display: flex;
+    /* default sola hizalı; kg-align-* override'ı varsa onlar geçerli */
+    justify-content: flex-start;
+}
+.kg-prose div.kg-button-card.kg-align-center { justify-content: center; }
+.kg-prose div.kg-button-card.kg-align-left   { justify-content: flex-start; }
+.kg-prose div.kg-button-card.kg-align-right  { justify-content: flex-end; }
+.koenig-lexical .kg-prose div.kg-button-card .kg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 1;
+    color: #ffffff;
+}
+.koenig-lexical .kg-prose div.kg-button-card .kg-btn-accent {
+    background: var(--kg-accent-color, rgb(255, 0, 149));
+    color: #ffffff;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Embed card (YouTube / Twitter / Vimeo / Instagram)
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose figure.kg-embed-card {
+    margin: 1.5em 0;
+    width: 100%;
+}
+.kg-prose figure.kg-embed-card iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+    display: block;
+}
+.kg-prose figure.kg-embed-card[data-embed-type="twitter"] iframe,
+.kg-prose figure.kg-embed-card[data-embed-type="instagram"] iframe {
+    aspect-ratio: auto;
+    min-height: 400px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Header card
+
+   Editör'ün exportDOM çıktısı:
+     <div class="kg-card kg-header-card kg-v2 kg-width-full kg-content-wide" style="background-color:#000">
+       <div class="kg-header-card-content">
+         <div class="kg-header-card-text kg-align-center">
+           <h2 class="kg-header-card-heading" style="color:#FFF">…</h2>
+           <p  class="kg-header-card-subheading" style="color:#FFF">…</p>
+           <a  class="kg-header-card-button" style="background-color:#FFF;color:#000">…</a>
+
+   - kg-style-* class'ları YOK; renkler inline style'la geliyor → background/color override yapmıyoruz.
+   - subheading `<p>` (h3 değil).
+   - button text-decoration override için `.koenig-lexical` prefix ile specificity bumple
+     (kg-prose a underline kuralını yenmek için).
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-header-card {
+    padding: 64px 32px;
+}
+.kg-prose div.kg-header-card .kg-header-card-content {
+    margin: 0 auto;
+    max-width: 1140px;
+}
+.kg-prose div.kg-header-card .kg-header-card-text { display: block; }
+.kg-prose div.kg-header-card .kg-header-card-text.kg-align-center { text-align: center; }
+.kg-prose div.kg-header-card .kg-header-card-text.kg-align-left   { text-align: left;   }
+
+.kg-prose div.kg-header-card .kg-header-card-heading {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+}
+.kg-prose div.kg-header-card .kg-header-card-subheading {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 12px 0 0;
+}
+.koenig-lexical .kg-prose div.kg-header-card .kg-header-card-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   HTML card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-html-card {
+    margin: 1.5em 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   File card
+
+   Editör'ün exportDOM çıktısı semantic class kullanmıyor; iç layout tamamen
+   Tailwind utility class'larıyla geliyor (`flex justify-between rounded-md
+   border-grey/30 p-2 …`). Bu utility'ler `koenig-lexical.css` bundle'ında
+   zaten mevcut → bizim işimiz dış sarmalayıcıları "transparent passthrough"
+   yapıp Tailwind layout'unun genişlemesini sağlamak.
+
+   Önceki versiyon `<a>` üzerine `display:flex; padding; border; gap` eklediği
+   için iç div ~201px'e sıkışıyordu (flex item shrink-to-content).
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-file-card {
+    margin: 1.5em 0;
+}
+/* Override koenig-lexical'in `.kg-prose a {text-decoration: underline}` kuralı için `.koenig-lexical` prefix. */
+.koenig-lexical .kg-prose div.kg-file-card .kg-file-card-container {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+/* Anchor → unnamed wrapper div → Tailwind flex container. Hepsi tam genişlik olmalı. */
+.kg-prose div.kg-file-card .kg-file-card-container > div {
+    width: 100%;
+}
+
+/* Editör Tailwind utility'leri title/desc kutularını sabit yükseklik (`h-[30px]`/`h-[26px]`)
+   + `leading-none` ile veriyor → text kutunun TEPESİNE yapışıyor, altta boşluk kalıyor.
+   Flex+center ile dikey ortala → text kutu içinde aşağı kayar, görsel olarak dengelenir.
+   `pb-1` desc altındaki ekstra 4px boşluğu kaldırıyoruz; centering zaten yeterli.
+
+   Sol sütun (.flex.w-full.flex-col) `justify-between` ile title/desc'i tepeye, dataset'i
+   tabana ittiğinden dağınık görünüyordu. `space-around` ile üç bloğa eşit pay; içeride
+   title+desc'i birlikte tutmak için aralarına 0 vermiyoruz, doğal flow ile çıkıyor. */
+.kg-prose div.kg-file-card [data-kg-file-card="fileTitle"],
+.kg-prose div.kg-file-card [data-kg-file-card="fileDescription"] {
+    display: flex;
+    align-items: center;
+}
+.kg-prose div.kg-file-card [data-kg-file-card="fileDescription"] {
+    padding-bottom: 0;
+}
+.kg-prose div.kg-file-card .kg-file-card-container .flex.w-full.flex-col {
+    justify-content: space-around;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Audio card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-audio-card {
+    display: flex;
+    margin: 1.5em 0;
+    padding: 16px;
+    border: 1px solid rgba(124, 139, 154, 0.25);
+    border-radius: 6px;
+    align-items: center;
+    gap: 16px;
+}
+.kg-prose div.kg-audio-card audio {
+    width: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Video card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose figure.kg-video-card {
+    margin: 1.5em 0;
+}
+.kg-prose figure.kg-video-card .kg-video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+.kg-prose figure.kg-video-card video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 6px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Product card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-product-card {
+    margin: 1.5em 0;
+    padding: 24px;
+    border: 1px solid rgba(124, 139, 154, 0.25);
+    border-radius: 6px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Gallery card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose figure.kg-gallery-card {
+    margin: 1.5em 0;
+}
+.kg-prose figure.kg-gallery-card .kg-gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+}
+.kg-prose figure.kg-gallery-card .kg-gallery-image img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Signup card
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose div.kg-signup-card {
+    margin: 1.5em 0;
+    padding: 32px;
+    background: #f4f5f6;
+    border-radius: 6px;
+    text-align: center;
+}
