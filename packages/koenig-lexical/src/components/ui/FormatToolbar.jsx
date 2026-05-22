@@ -22,6 +22,7 @@ import {
 } from './ToolbarMenu';
 import {altOrOption, ctrlOrCmdSymbol, ctrlOrSymbol} from '../../utils/shortcutSymbols';
 import {getSelectedNode} from '../../utils/getSelectedNode';
+import {useTranslation} from '../../i18n/I18nContext';
 
 const blockTypeToBlockName = {
     bullet: 'Bulleted List',
@@ -58,6 +59,7 @@ export default function FormatToolbar({
     onSnippetClick,
     hiddenFormats = []
 }) {
+    const {t} = useTranslation();
     const [isBold, setIsBold] = React.useState(false);
     const [isItalic, setIsItalic] = React.useState(false);
     const [blockType, setBlockType] = React.useState('paragraph');
@@ -179,7 +181,7 @@ export default function FormatToolbar({
                 hide={hideBold}
                 icon="bold"
                 isActive={isBold}
-                label="Bold"
+                label={t('Bold')}
                 shortcutKeys={[ctrlOrCmdSymbol(), 'B']}
                 onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}
             />
@@ -187,7 +189,7 @@ export default function FormatToolbar({
                 data-kg-toolbar-button="italic"
                 icon="italic"
                 isActive={isItalic}
-                label="Emphasize"
+                label={t('Emphasize')}
                 shortcutKeys={[ctrlOrCmdSymbol(), 'I']}
                 onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}
             />
@@ -196,7 +198,7 @@ export default function FormatToolbar({
                 hide={hideHeading}
                 icon="headingTwo"
                 isActive={blockType === 'h2'}
-                label="Heading 2"
+                label={t('Heading 2')}
                 shortcutKeys={[ctrlOrSymbol(), altOrOption(), '2']}
                 onClick={() => (blockType === 'h2' ? formatParagraph() : formatHeading('h2'))}
             />
@@ -205,7 +207,7 @@ export default function FormatToolbar({
                 hide={hideHeading}
                 icon="headingThree"
                 isActive={blockType === 'h3'}
-                label="Heading 3"
+                label={t('Heading 3')}
                 shortcutKeys={[ctrlOrSymbol(), altOrOption(), '3']}
                 onClick={() => (blockType === 'h3' ? formatParagraph() : formatHeading('h3'))}
             />
@@ -215,7 +217,7 @@ export default function FormatToolbar({
                 hide={hideQuotes}
                 icon={quoteIcon(blockType)}
                 isActive={blockType.endsWith?.('quote') || blockType.endsWith?.('aside')}
-                label="Quote"
+                label={t('Quote')}
                 shortcutKeys={[ctrlOrSymbol(), 'Q']}
                 onClick={formatQuote}
             />
@@ -224,7 +226,7 @@ export default function FormatToolbar({
                 data-kg-toolbar-button="link"
                 icon="link"
                 isActive={!!isLinkSelected}
-                label="Link"
+                label={t('Link')}
                 shortcutKeys={[ctrlOrCmdSymbol(), 'K']}
                 onClick={onLinkClick}
             />
@@ -235,7 +237,7 @@ export default function FormatToolbar({
                 hide={hideSnippets}
                 icon="snippet"
                 isActive={false}
-                label="Save as snippet"
+                label={t('Save as snippet')}
                 onClick={onSnippetClick}
             />
         </ToolbarMenu>

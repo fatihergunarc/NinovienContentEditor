@@ -2,8 +2,10 @@ import CloseIcon from '../../assets/icons/kg-close.svg?react';
 import Portal from './Portal';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {useTranslation} from '../../i18n/I18nContext';
 
 export function Modal({isOpen, onClose, children}) {
+    const {t} = useTranslation();
     const controlByKeys = (event) => {
         event.stopPropagation();
         event.preventDefault();
@@ -27,7 +29,7 @@ export function Modal({isOpen, onClose, children}) {
             >
                 <div className="fixed inset-0 z-40 h-[100vh] bg-black opacity-60" onClick={onClose}></div>
                 <div className="relative z-50 my-8 w-full max-w-[550px] rounded-lg bg-white drop-shadow-2xl">
-                    <button aria-label="Close dialog" className="absolute right-6 top-6 cursor-pointer" type="button" autoFocus>
+                    <button aria-label={t('Close dialog')} className="absolute right-6 top-6 cursor-pointer" type="button" autoFocus>
                         <CloseIcon className="size-4 stroke-2 text-grey-400" onClick={onClose}/>
                     </button>
                     {children}

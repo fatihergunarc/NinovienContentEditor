@@ -2,6 +2,7 @@ import ExternalLinkIcon from '../../assets/icons/kg-help.svg?react';
 import React from 'react';
 import TrashCardIcon from '../../assets/icons/kg-trash.svg?react';
 import trackEvent from '../../utils/analytics';
+import {useTranslation} from '../../i18n/I18nContext';
 
 export const CardMenuSection = ({label, children, ...props}) => {
     let helpLink = '';
@@ -30,6 +31,7 @@ export const CardMenuSection = ({label, children, ...props}) => {
 };
 
 export const CardMenuItem = ({label, shortcut, desc, isSelected, scrollToItem, onClick, Icon, ...props}) => {
+    const {t} = useTranslation();
     const buttonRef = React.useRef(null);
 
     React.useEffect(() => {
@@ -62,7 +64,7 @@ export const CardMenuItem = ({label, shortcut, desc, isSelected, scrollToItem, o
                     <Icon className="size-[1.8rem]" />
                 </div>
                 <div className="flex w-full justify-between">
-                    <div className="m-0 truncate text-[1.35rem] font-medium leading-snug tracking-[.02rem] text-grey-900 dark:text-grey-200">{label}</div>
+                    <div className="m-0 truncate text-[1.35rem] font-medium leading-snug tracking-[.02rem] text-grey-900 dark:text-grey-200">{t(label)}</div>
                     <div className="invisible m-0 truncate text-[1.35rem] font-medium leading-snug tracking-[.02rem] text-grey-500 group-hover:visible dark:text-grey-200">{shortcut}</div>
                 </div>
             </button>
