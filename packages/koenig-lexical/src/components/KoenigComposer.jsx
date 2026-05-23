@@ -5,6 +5,7 @@ import defaultTheme from '../themes/default';
 import {CollaborationPlugin} from '@lexical/react/LexicalCollaborationPlugin';
 import {DEFAULT_CONFIG} from '@fatih_ergun/kg-default-nodes';
 import {Doc} from 'yjs';
+import {I18nProvider} from '../i18n/I18nContext';
 import {KoenigSelectedCardContext} from '../context/KoenigSelectedCardContext';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {TKContext} from '../context/TKContext';
@@ -37,6 +38,7 @@ const KoenigComposer = ({
     multiplayerDocId,
     multiplayerUsername,
     editable = true,
+    locale = 'en',
     children
 }) => {
     const initialConfig = React.useMemo(() => {
@@ -107,36 +109,39 @@ const KoenigComposer = ({
     }, [multiplayerEndpoint, multiplayerDocId, multiplayerDebug]);
 
     return (
-        <LexicalComposer initialConfig={{...initialConfig, editable}}>
-            <KoenigComposerContext.Provider value={{
-                fileUploader,
-                editorContainerRef,
-                cardConfig,
-                darkMode,
-                enableMultiplayer,
-                isTKEnabled,
-                multiplayerEndpoint,
-                multiplayerDocId,
-                multiplayerUsername,
-                createWebsocketProvider,
-                onWordCountChangeRef
-            }}>
-                <KoenigSelectedCardContext>
-                    <TKContext>
-                        {enableMultiplayer ? (
-                            <CollaborationPlugin
-                                id="main"
-                                initialEditorState={initialEditorState}
-                                providerFactory={createWebsocketProvider}
-                                shouldBootstrap={true}
-                                username={multiplayerUsername}
-                            />
-                        ) : null}
-                        {children}
-                    </TKContext>
-                </KoenigSelectedCardContext>
-            </KoenigComposerContext.Provider>
-        </LexicalComposer>
+        <I18nProvider locale={locale}>
+            <LexicalComposer initialConfig={{...initialConfig, editable}}>
+                <KoenigComposerContext.Provider value={{
+                    fileUploader,
+                    editorContainerRef,
+                    cardConfig,
+                    darkMode,
+                    enableMultiplayer,
+                    isTKEnabled,
+                    multiplayerEndpoint,
+                    multiplayerDocId,
+                    multiplayerUsername,
+                    createWebsocketProvider,
+                    onWordCountChangeRef,
+                    locale
+                }}>
+                    <KoenigSelectedCardContext>
+                        <TKContext>
+                            {enableMultiplayer ? (
+                                <CollaborationPlugin
+                                    id="main"
+                                    initialEditorState={initialEditorState}
+                                    providerFactory={createWebsocketProvider}
+                                    shouldBootstrap={true}
+                                    username={multiplayerUsername}
+                                />
+                            ) : null}
+                            {children}
+                        </TKContext>
+                    </KoenigSelectedCardContext>
+                </KoenigComposerContext.Provider>
+            </LexicalComposer>
+        </I18nProvider>
     );
 };
 

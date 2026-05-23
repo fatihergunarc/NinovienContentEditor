@@ -13,6 +13,7 @@ import {MultiSelectDropdown} from './MultiSelectDropdown';
 import {Slider} from './Slider.jsx';
 import {TabView} from './TabView';
 import {Toggle} from './Toggle';
+import {useTranslation} from '../../i18n/I18nContext';
 
 export function SettingsPanel({children, darkMode, cardWidth, tabs, defaultTab}) {
     const {ref} = useSettingsPanelReposition({}, cardWidth);
@@ -47,12 +48,13 @@ export function SettingsPanel({children, darkMode, cardWidth, tabs, defaultTab})
 }
 
 export function ToggleSetting({label, description, isChecked, onChange, dataTestId}) {
+    const {t} = useTranslation();
     return (
         <label className="flex w-full cursor-pointer items-center justify-between">
             <div>
-                <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{label}</div>
+                <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{t(label)}</div>
                 {description &&
-                    <p className="mt-1 w-11/12 text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{description}</p>
+                    <p className="mt-1 w-11/12 text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{t(description)}</p>
                 }
             </div>
             <div className="flex shrink-0 pl-2">
@@ -63,27 +65,29 @@ export function ToggleSetting({label, description, isChecked, onChange, dataTest
 }
 
 export function SliderSetting({label, onChange, max, min, value, defaultValue, description, dataTestId}) {
+    const {t} = useTranslation();
     return (
         <div className="my-2 flex w-full flex-col gap-1">
             <div className="flex items-center justify-between font-sans text-[1.3rem] font-normal">
-                <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{label}</div>
+                <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{t(label)}</div>
                 <div className="text-grey-900 dark:text-grey-100" data-testid={`${dataTestId}-value`}>{value}</div>
             </div>
             <Slider dataTestId={dataTestId} defaultValue={defaultValue} max={max} min={min} value={value} onChange={onChange} />
             {description &&
-                <p className="mt-1 text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{description}</p>
+                <p className="mt-1 text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{t(description)}</p>
             }
         </div>
     );
 }
 
 export function InputSetting({label, hideLabel, description, onChange, value, placeholder, dataTestId, onBlur}) {
+    const {t} = useTranslation();
     return (
         <div className="flex w-full flex-col justify-between">
-            <div className={hideLabel ? 'sr-only' : 'mb-1.5 text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300'}>{label}</div>
-            <Input dataTestId={dataTestId} placeholder={placeholder} value={value} onBlur={onBlur} onChange={onChange} />
+            <div className={hideLabel ? 'sr-only' : 'mb-1.5 text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300'}>{t(label)}</div>
+            <Input dataTestId={dataTestId} placeholder={placeholder ? t(placeholder) : placeholder} value={value} onBlur={onBlur} onChange={onChange} />
             {description &&
-                <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{description}</p>
+                <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{t(description)}</p>
             }
         </div>
     );
@@ -130,6 +134,7 @@ export function InputUrlSetting({dataTestId, label, value, onChange}) {
  * @returns
  */
 export function InputListSetting({dataTestId, description, label, listOptions, onChange, placeholder, value}) {
+    const {t} = useTranslation();
     function onClick(item) {
         onChange(item.value);
     }
@@ -159,26 +164,27 @@ export function InputListSetting({dataTestId, description, label, listOptions, o
 
     return (
         <div className="flex w-full flex-col justify-between">
-            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{label}</div>
+            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{t(label)}</div>
             <InputList
                 dataTestId={dataTestId}
                 getItem={getItem}
                 listOptions={listOptions}
-                placeholder={placeholder}
+                placeholder={placeholder ? t(placeholder) : placeholder}
                 value={value}
                 onChange={onChange}
             />
             {description &&
-                <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{description}</p>
+                <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{t(description)}</p>
             }
         </div>
     );
 }
 
 export function DropdownSetting({label, description, value, menu, onChange, dataTestId}) {
+    const {t} = useTranslation();
     return (
         <div className="flex w-full flex-col justify-between gap-1">
-            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300" data-testid={`${dataTestId}-label`}>{label}</div>
+            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300" data-testid={`${dataTestId}-label`}>{t(label)}</div>
             <Dropdown
                 dataTestId={dataTestId}
                 menu={menu}
@@ -186,7 +192,7 @@ export function DropdownSetting({label, description, value, menu, onChange, data
                 onChange={onChange}
             />
             {description &&
-                    <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{description}</p>
+                    <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{t(description)}</p>
             }
         </div>
     );
@@ -201,28 +207,30 @@ export function DropdownSetting({label, description, value, menu, onChange, data
  * @returns
  */
 export function MultiSelectDropdownSetting({label, description, placeholder = '', items, availableItems, onChange, dataTestId, allowAdd = true}) {
+    const {t} = useTranslation();
     return (
         <div className="flex w-full flex-col justify-between gap-1">
-            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{label}</div>
+            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{t(label)}</div>
             <MultiSelectDropdown
                 allowAdd={allowAdd}
                 availableItems={availableItems}
                 dataTestId={dataTestId}
                 items={items}
-                placeholder={placeholder}
+                placeholder={placeholder ? t(placeholder) : placeholder}
                 onChange={onChange}
             />
             {description &&
-                    <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{description}</p>
+                    <p className="text-xs font-normal leading-snug text-grey-700 dark:text-grey-600">{t(description)}</p>
             }
         </div>
     );
 }
 
 export function ButtonGroupSetting({label, onClick, selectedName, buttons}) {
+    const {t} = useTranslation();
     return (
         <div className="flex w-full items-center justify-between text-[1.3rem]">
-            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{label}</div>
+            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{t(label)}</div>
 
             <div className="shrink-0 pl-2">
                 <ButtonGroup buttons={buttons} selectedName={selectedName} onClick={onClick} />
@@ -232,9 +240,10 @@ export function ButtonGroupSetting({label, onClick, selectedName, buttons}) {
 }
 
 export function ColorOptionSetting({label, onClick, selectedName, buttons, layout, dataTestId}) {
+    const {t} = useTranslation();
     return (
         <div className={`flex w-full text-[1.3rem] ${layout === 'stacked' ? 'flex-col' : 'items-center justify-between'}`} data-testid={dataTestId}>
-            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{label}</div>
+            <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{t(label)}</div>
 
             <div className={`shrink-0 ${layout === 'stacked' ? '-mx-1 pt-1' : 'pl-2'}`}>
                 <ColorOptionButtons buttons={buttons} selectedName={selectedName} onClick={onClick} />
@@ -244,6 +253,7 @@ export function ColorOptionSetting({label, onClick, selectedName, buttons, layou
 }
 
 export function ColorPickerSetting({label, isExpanded, onSwatchChange, onPickerChange, onTogglePicker, value, swatches, eyedropper, hasTransparentOption, dataTestId}) {
+    const {t} = useTranslation();
     const mappedPicker = (event) => {
         onTogglePicker(true);
     };
@@ -269,7 +279,7 @@ export function ColorPickerSetting({label, isExpanded, onSwatchChange, onPickerC
     return (
         <div className="flex-col" data-testid={dataTestId} onClick={markClickedInside}>
             <div className="flex w-full items-center justify-between text-[1.3rem]">
-                <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{label}</div>
+                <div className="text-sm font-medium tracking-normal text-grey-900 dark:text-grey-300">{t(label)}</div>
 
                 <div className="shrink-0 pl-2">
                     <ColorIndicator
@@ -287,9 +297,10 @@ export function ColorPickerSetting({label, isExpanded, onSwatchChange, onPickerC
 }
 
 export function MediaUploadSetting({className, label, hideLabel, onFileChange, isDraggedOver, placeholderRef, src, alt, isLoading, errors = [], progress, onRemoveMedia, icon, desc = '', size, borderStyle, mimeTypes, isPinturaEnabled, openImageEditor, setFileInputRef}) {
+    const {t} = useTranslation();
     return (
         <div className={clsx(className)} data-testid="media-upload-setting">
-            <div className={hideLabel ? 'sr-only' : 'mb-2 text-sm font-medium tracking-normal text-grey-900 dark:text-grey-400'}>{label}</div>
+            <div className={hideLabel ? 'sr-only' : 'mb-2 text-sm font-medium tracking-normal text-grey-900 dark:text-grey-400'}>{t(label)}</div>
 
             <MediaUploader
                 alt={alt}
