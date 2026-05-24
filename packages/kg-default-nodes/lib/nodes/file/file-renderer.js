@@ -72,8 +72,9 @@ function cardTemplate(node, document) {
     const container = document.createElement('a');
     container.setAttribute('class', 'kg-file-card-container');
     container.setAttribute('href', node.src);
-    container.setAttribute('title', 'Download');
-    container.setAttribute('download', '');
+    container.setAttribute('title', 'Open file');
+    container.setAttribute('target', '_blank');
+    container.setAttribute('rel', 'noopener noreferrer');
 
     // Outer wrapper
     const wrapper = document.createElement('div');

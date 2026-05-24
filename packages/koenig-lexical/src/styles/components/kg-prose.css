@@ -683,6 +683,16 @@
             padding: 0;
         }
 
+        /* Lexical bir decorator node (kart) doküman başında olduğunda
+           ondan önce data-lexical-cursor="true" boş div enjekte ediyor;
+           bu boş div + decorator div, yukarıdaki `div + div` kuralını
+           tetikleyip leading kartın üzerinde ~32px boşluk yaratıyor ve
+           kart seçilince placeholder kaldırıldığı için yukarı kayma
+           gözleniyor — placeholder sonrası kardeşi spacing'den muaf tut. */
+        > [data-lexical-cursor] + * {
+            padding-top: 0;
+        }
+
         :where(
             p + div,
             blockquote + div,
