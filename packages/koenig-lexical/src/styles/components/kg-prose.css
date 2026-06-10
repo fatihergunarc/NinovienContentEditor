@@ -683,6 +683,44 @@
             padding: 0;
         }
 
+        /* Half / float image cards (rendered output)
+        /* -------------------------------------------------------------------- */
+
+        figure.kg-card.kg-width-half-left,
+        figure.kg-card.kg-width-half-right {
+            width: 50%;
+            max-width: 50%;
+            box-sizing: border-box;
+        }
+
+        figure.kg-card.kg-width-half-left img,
+        figure.kg-card.kg-width-half-right img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        figure.kg-card.kg-width-half-left {
+            float: left;
+            margin: 0.4em 1.6em 0.8em 0;
+        }
+
+        figure.kg-card.kg-width-half-right {
+            float: right;
+            margin: 0.4em 0 0.8em 1.6em;
+        }
+
+        @media (max-width: 500px) {
+            figure.kg-card.kg-width-half-left,
+            figure.kg-card.kg-width-half-right {
+                float: none;
+                width: 100%;
+                max-width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
         /* Lexical bir decorator node (kart) doküman başında olduğunda
            ondan önce data-lexical-cursor="true" boş div enjekte ediyor;
            bu boş div + decorator div, yukarıdaki `div + div` kuralını

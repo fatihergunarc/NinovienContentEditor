@@ -21,7 +21,7 @@ export function parseImageNode(ImageNode) {
             if (img) {
                 return {
                     conversion(domNode) {
-                        const kgClass = domNode.className.match(/kg-width-(wide|full)/);
+                        const kgClass = domNode.className.match(/kg-width-(wide|full|half-left|half-right)/);
                         const grafClass = domNode.className.match(/graf--layout(FillWidth|OutsetCenter)/);
 
                         if (!img) {

@@ -1,6 +1,6 @@
 {
   "name": "@fatih_ergun/kg-default-nodes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "...",
   "author": "...",
   "license": "MIT",
@@ -17,6 +17,12 @@
     "lint:code": "eslint *.js lib/ --ext .js --cache",
     "lint": "yarn lint:code && yarn lint:test",
     "lint:test": "eslint -c test/.eslintrc.js test/ --ext .js --cache"
+  },
+  "c8": {
+    "statements": 90,
+    "branches": 83,
+    "functions": 90,
+    "lines": 90
   },
   "files": [
     "LICENSE",

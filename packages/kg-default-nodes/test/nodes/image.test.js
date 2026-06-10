@@ -197,6 +197,22 @@ describe('ImageNode', function () {
             element.classList.contains('kg-width-wide').should.be.true();
         }));
 
+        it('renders a half-left image', editorTest(function () {
+            dataset.cardWidth = 'half-left';
+            const imageNode = $createImageNode(dataset);
+            const {element} = imageNode.exportDOM(exportOptions);
+
+            element.classList.contains('kg-width-half-left').should.be.true();
+        }));
+
+        it('renders a half-right image', editorTest(function () {
+            dataset.cardWidth = 'half-right';
+            const imageNode = $createImageNode(dataset);
+            const {element} = imageNode.exportDOM(exportOptions);
+
+            element.classList.contains('kg-width-half-right').should.be.true();
+        }));
+
         it('uses resized width and height when there\'s a max width', editorTest(function () {
             dataset.width = 3000;
             dataset.height = 6000;
@@ -374,6 +390,28 @@ describe('ImageNode', function () {
 
             nodes.length.should.equal(1);
             nodes[0].cardWidth.should.equal('full');
+        }));
+
+        it('extracts Koenig half-left card width', editorTest(function () {
+            const document = createDocument(html`
+                <figure class="kg-card kg-image-card kg-width-half-left">
+                    <img src="http://example.com/test.png">
+                </figure>
+            `);
+            const nodes = $generateNodesFromDOM(editor, document);
+            nodes.length.should.equal(1);
+            nodes[0].cardWidth.should.equal('half-left');
+        }));
+
+        it('extracts Koenig half-right card width', editorTest(function () {
+            const document = createDocument(html`
+                <figure class="kg-card kg-image-card kg-width-half-right">
+                    <img src="http://example.com/test.png">
+                </figure>
+            `);
+            const nodes = $generateNodesFromDOM(editor, document);
+            nodes.length.should.equal(1);
+            nodes[0].cardWidth.should.equal('half-right');
         }));
 
         it('extracts IMG dimensions from width/height attrs', editorTest(function () {

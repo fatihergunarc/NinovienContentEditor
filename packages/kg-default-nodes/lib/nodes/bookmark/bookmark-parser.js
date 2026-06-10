@@ -70,7 +70,9 @@ export function parseBookmarkNode(BookmarkNode) {
                         // Image is optional,
                         // The element usually still exists with an additional has.mixtapeImage--empty class and has no background image
                         if (imgElement && imgElement.style['background-image']) {
-                            thumbnail = imgElement.style['background-image'].match(/url\(([^)]*?)\)/)[1];
+                            // CSSOM serializes `url(...)` with surrounding quotes (e.g. url("...")),
+                            // so strip any leading/trailing quotes from the captured value.
+                            thumbnail = imgElement.style['background-image'].match(/url\(([^)]*?)\)/)[1].replace(/^['"]|['"]$/g, '');
                         }
 
                         let payload = {url,
