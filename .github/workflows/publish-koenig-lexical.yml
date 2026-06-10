@@ -1,6 +1,10 @@
 name: Publish koenig-lexical
 
 on:
+  # Allow manually re-running a publish from the Actions tab / gh CLI, e.g.
+  # when a change that should publish didn't touch packages/koenig-lexical/**
+  # (such as a fix to this workflow itself).
+  workflow_dispatch:
   push:
     branches:
       - main
