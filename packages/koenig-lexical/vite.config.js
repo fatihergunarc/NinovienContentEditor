@@ -6,6 +6,7 @@ import svgr from 'vite-plugin-svgr';
 import tailwindcss from 'tailwindcss';
 import {defineConfig, loadEnv} from 'vite';
 import {resolve} from 'path';
+import {existsSync} from 'fs';
 import {sentryVitePlugin} from '@sentry/vite-plugin';
 
 const outputFileName = pkg.name[0] === '@' ? pkg.name.slice(pkg.name.indexOf('/') + 1) : pkg.name;
@@ -56,7 +57,15 @@ export default (function viteConfig({mode}) {
             alias: {
                 // required to prevent double-bundling of yjs due to cjs/esm mismatch
                 // (see https://github.com/facebook/lexical/issues/2153)
-                yjs: resolve('../../node_modules/yjs/src/index.js')
+                // Resolve yjs/src wherever it lives relative to CWD (the package dir
+                // for both `yarn build` and the CI publish step): hoisted at the repo
+                // root in workspace dev, or installed package-locally in CI which runs
+                // `npm install --no-workspaces`. Picking the existing path keeps the
+                // publish workflow's `vite build` from failing with ENOENT on yjs/src.
+                yjs: [
+                    resolve('node_modules/yjs/src/index.js'),
+                    resolve('../../node_modules/yjs/src/index.js')
+                ].find(existsSync) || resolve('../../node_modules/yjs/src/index.js')
             }
         },
         optimizeDeps: {
