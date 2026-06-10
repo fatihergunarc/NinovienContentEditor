@@ -5,6 +5,8 @@ import EyeIcon from '../../assets/icons/kg-eye.svg?react';
 import HeadingThreeIcon from '../../assets/icons/kg-heading-3.svg?react';
 import HeadingTwoIcon from '../../assets/icons/kg-heading-2.svg?react';
 import ImgFullIcon from '../../assets/icons/kg-img-full.svg?react';
+import ImgHalfLeftIcon from '../../assets/icons/kg-img-half-left.svg?react';
+import ImgHalfRightIcon from '../../assets/icons/kg-img-half-right.svg?react';
 import ImgRegularIcon from '../../assets/icons/kg-img-regular.svg?react';
 import ImgReplaceIcon from '../../assets/icons/kg-replace.svg?react';
 import ImgWideIcon from '../../assets/icons/kg-img-wide.svg?react';
@@ -30,6 +32,8 @@ export const TOOLBAR_ICONS = {
     imgRegular: ImgRegularIcon,
     imgWide: ImgWideIcon,
     imgFull: ImgFullIcon,
+    imgHalfLeft: ImgHalfLeftIcon,
+    imgHalfRight: ImgHalfRightIcon,
     imgReplace: ImgReplaceIcon,
     add: AddIcon,
     edit: EditIcon,
