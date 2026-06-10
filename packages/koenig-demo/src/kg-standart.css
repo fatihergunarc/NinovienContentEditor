@@ -4,6 +4,8 @@
  * Selector'ler scope'suz (`.kg-prose figure.kg-card` gibi) — NinovienClient view tarafına
  * aynen kopyalanabilir. Editor decorator'leri `<figure>`, `<div class="kg-bookmark-card">` vb.
  * etiketleri kullanmadığı için bu kurallar edit modunu etkilemez; yalnızca HTML render'a uygulanır.
+ * İki istisna: (1) hr edit DOM'unda da gerçek <hr> olarak var → render kuralı `>` ile ayrılır;
+ * (2) dosya sonundaki "EDIT MODU" bölümü BİLEREK editörü hedefler (WYSIWYG boşluk eşitlemesi).
  *
  * Ghost Source/Casper theme yaklaşımıyla aynı mimari: kütüphane semantic class'lar üretir,
  * theme katmanı (bu dosya) görsel stili sağlar. */
@@ -49,19 +51,39 @@
     margin-right: calc(50% - 50vw);
 }
 
+/* half-left / half-right: kolonun %50'si, gövde metni yanından akar (float).
+   width:% (vw değil) → kolon-göreceli kalır, breakout yapmaz. Dar ekranda
+   (≤500px) float kapanır, görsel tam genişliğe geçip metnin üstüne yığılır. */
 .kg-prose .kg-card.kg-width-half-left,
 .kg-prose .kg-card.kg-width-half-right {
     width: 50%;
     max-width: 50%;
     box-sizing: border-box;
 }
+/* Yan boşlukta !important: koenig-lexical.css'in nested 1.6em figür margin'i
+   (specificity 0,4,1) bizden SONRA yükleniyor — margin-top ile aynı hikâye
+   (aşağıdaki yorum bloğuna bak). Longhand olarak sadece metin tarafı önemli;
+   shorthand'i komple !important yapmak margin-top kurgusunu bozardı. */
 .kg-prose .kg-card.kg-width-half-left {
     float: left;
-    margin: 0.4em 1.6em 0.8em 0;
+    margin: 0.4em 48px 0.8em 0;
+    margin-right: 48px !important;
 }
 .kg-prose .kg-card.kg-width-half-right {
     float: right;
-    margin: 0.4em 0 0.8em 1.6em;
+    margin: 0.4em 0 0.8em 48px;
+    margin-left: 48px !important;
+}
+/* Yarım görselde img üstten 8px içeri başlar (ilk metin satırıyla optik hizalama);
+   figcaption alt boşluğu standart 23px yerine 8px — yarım kart kolonu dar olduğundan
+   geniş alt boşluk float'un altında gereksiz delik açıyor. */
+.kg-prose figure.kg-card.kg-width-half-left img,
+.kg-prose figure.kg-card.kg-width-half-right img {
+    margin-top: 8px;
+}
+.kg-prose figure.kg-card.kg-width-half-left figcaption,
+.kg-prose figure.kg-card.kg-width-half-right figcaption {
+    padding-bottom: 8px;
 }
 @media (max-width: 500px) {
     .kg-prose .kg-card.kg-width-half-left,
@@ -69,25 +91,70 @@
         float: none;
         width: 100%;
         max-width: 100%;
-        margin-left: 0;
-        margin-right: 0;
+        /* !important: yukarıdaki 48px yan boşluk da !important; media query
+           specificity eklemediği için sıfırlama ancak böyle kazanır. */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
+}
+
+/* Yarım görsel render'da JS ile (NinovienEditorViewer) hemen ardından gelen
+   <p>'nin başına taşınır; float, paragrafın ilk satır kutusunun tepesinden
+   başladığı için üst hizalama YAPISALDIR — margin eşleştirme hilesi gerekmez
+   ve önceki blok ne olursa olsun (başlık, hr, liste) hizalama bozulmaz.
+   Ardında p olmayan (taşınamayan) yarım görsel kardeş konumda kalır; ona eski
+   28px üst boşluğu koru. !important: yayınlanan koenig-lexical.css'in 0.4em
+   figür margin'i (nested, specificity 0,4,1) bizden SONRA yüklendiği için.
+   p-içi kural (0,3,1) > kardeş kural (0,3,0) → taşınan figürde 0 kazanır. */
+.kg-prose .kg-card.kg-width-half-left,
+.kg-prose .kg-card.kg-width-half-right {
+    margin-top: 28px !important;
+}
+.kg-prose p > .kg-card.kg-width-half-left,
+.kg-prose p > .kg-card.kg-width-half-right {
+    margin-top: 0 !important;
 }
 
 /* figure ↔ paragraf geçiş margin'leri (Lexical DnD wrapper davranışını taklit eder). */
 .kg-prose figure.kg-card + p { margin-top: 28px; }
 .kg-prose p + figure.kg-card { margin-top: 28px; }
+/* Half olmayan fotoğraflarda (regular/wide/full image card) metinle arada daha
+   ferah boşluk: 28px yerine 64px. Half'ler hariç — onların düşey ritmi yukarıdaki
+   !important kurgusuyla yönetiliyor; bookmark/embed gibi diğer figure cardlar da
+   28px'te kalır. */
+.kg-prose figure.kg-image-card:not(.kg-width-half-left):not(.kg-width-half-right) + p { margin-top: 64px; }
+.kg-prose p + figure.kg-image-card:not(.kg-width-half-left):not(.kg-width-half-right) { margin-top: 64px; }
+/* Art arda fotoğraflar: arada 64px (metin geçişiyle aynı). İlk fotoğraf
+   caption'lıysa figcaption'ın 23px alt boşluğu sıfırlanır → iki fotoğraf arası
+   boşluk caption olsun olmasın AYNI (64px) kalır. :has() Chrome 105+/Safari
+   15.4+; desteklemeyen tarayıcıda kural düşer ve caption'lı arada 23px fazla
+   boşluk kalır (kabul edilebilir). */
+.kg-prose figure.kg-image-card:not(.kg-width-half-left):not(.kg-width-half-right) + figure.kg-image-card:not(.kg-width-half-left):not(.kg-width-half-right) {
+    margin-top: 64px;
+}
+.kg-prose figure.kg-image-card:not(.kg-width-half-left):not(.kg-width-half-right):has(+ figure.kg-image-card) figcaption {
+    padding-bottom: 0;
+}
 
 /* ─────────────────────────────────────────────────────────────────────
    HR
    ───────────────────────────────────────────────────────────────────── */
 
-.kg-prose hr {
+/* Divider: üstte ve altta 64px — fotoğraf boşluklarıyla aynı düşey ritim.
+   Komşu margin'lerle collapse olur; komşununki 64'ten küçükse görünür boşluk
+   tam 64px kalır. `.koenig-lexical` prefix şart: kütüphanenin
+   `& :where(hr)` kuralı (nesting context'i 0,2,0) düz `.kg-prose hr`'ı (0,1,1)
+   yenip margin: 1.6rem uyguluyordu.
+   `>` şart: editörün contenteditable kökü de kg-prose ve divider KARTI edit
+   modunda gerçek <hr> render ediyor ([data-kg-card] içinde, derin); 64px ona
+   sızarsa kart wrapper boşluğuyla toplanıp edit'te aşırı geniş görünür.
+   Render'da hr her zaman kg-prose'un doğrudan çocuğu → > sadece render'ı vurur. */
+.koenig-lexical .kg-prose > hr {
     border: 0;
     height: 1px;
     background: #e5e7eb;
-    margin-top: 0;
-    margin-bottom: 49px;
+    margin-top: 64px;
+    margin-bottom: 64px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -520,4 +587,65 @@
     background: #f4f5f6;
     border-radius: 6px;
     text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   EDIT MODU — WYSIWYG boşluk eşitlemesi
+
+   Editör (contenteditable kökü .kg-prose[data-lexical-editor]) kendi kompakt
+   ritmiyle gelir: fotoğraflar yapışık (0px), foto↔metin 28px, divider 16px.
+   Render tarafıyla (64px) aynı hissiyat için aynı düşey ritim editöre de
+   uygulanır. Kart blokları Lexical'da isimsiz bir <div> wrapper içinde
+   `[data-kg-card="..."]` olarak durur → :has() ile hedeflenir (Chrome 105+).
+   [data-lexical-editor] şartı render'a sızmayı engeller — render kg-prose'unda
+   bu attribute yok. Half görseller edit'te float edemez (Lexical blok düzeni
+   metin sarmayı desteklemez); onlar da fotoğraf ritmine dahil edilir.
+   ───────────────────────────────────────────────────────────────────── */
+
+.kg-prose[data-lexical-editor] > div:has([data-kg-card="image"]) + div:has([data-kg-card="image"]),
+.kg-prose[data-lexical-editor] > div:has([data-kg-card="image"]) + p,
+.kg-prose[data-lexical-editor] > p + div:has([data-kg-card="image"]) {
+    margin-top: 64px;
+}
+/* Editör kart wrapper'ları boşluğu kendi 32px üst PADDING'iyle verir (margin
+   değil — block-to-block rect ölçümünde görünmez, görsel karşılaştırmada
+   yakalandı). WYSIWYG için sıfırlanır; boşluk yukarıdaki margin'lerden gelir. */
+.kg-prose[data-lexical-editor] > div:has([data-kg-card="image"]),
+.kg-prose[data-lexical-editor] > div:has([data-kg-card="horizontalrule"]) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+/* .koenig-lexical-caption içinde başıboş bir whitespace text node var;
+   line-height: 15px ona fazladan satır kutusu açıyor (caption 39px'e çıkıyor,
+   render'da satır 24px). line-height: 0 → text node kutusu yok olur; gerçek
+   caption editörü kendi line-height'ını (24px) içeride tanımladığı için
+   etkilenmez. */
+.kg-prose[data-lexical-editor] [data-kg-card="image"] figcaption .koenig-lexical-caption {
+    line-height: 0;
+}
+.kg-prose[data-lexical-editor] > div:has([data-kg-card="horizontalrule"]) {
+    margin-top: 64px;
+    margin-bottom: 64px;
+}
+/* Kart içindeki hr, kütüphanenin :where(hr) 1.6rem margin'ini hâlâ alır
+   (render'daki `>` kuralı buraya erişmez) → çizgi karta 16px içeriden başlar,
+   görünür boşluk 64 yerine ~81px olur. Sıfırla; boşluk wrapper margin'inden. */
+.kg-prose[data-lexical-editor] [data-kg-card="horizontalrule"] hr {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+/* Edit caption'ı render yüksekliğiyle eşitle: editörün figcaption'ı
+   min-h-[40px] + p-2 ile gelir (≈55px); render'da 8px üst + 24px satır +
+   23px alt. min-height kalkar, dikey padding render değerlerine çekilir
+   (yatay 8px, caption toolbar'ı için kalır). */
+.kg-prose[data-lexical-editor] [data-kg-card="image"] figcaption {
+    min-height: 0;
+    padding-top: 8px;
+    padding-bottom: 23px;
+}
+/* Render'daki :has figcaption kuralının edit karşılığı: ardından fotoğraf
+   gelen kartın caption alt boşluğu sıfır → görsel→görsel boşluğu caption
+   olsun olmasın edit'te de eşit. */
+.kg-prose[data-lexical-editor] > div:has([data-kg-card="image"]):has(+ div [data-kg-card="image"]) figcaption {
+    padding-bottom: 0;
 }
