@@ -35,10 +35,13 @@ jobs:
         run: |
           cd packages/koenig-lexical
           # Bump the patch version by editing only the version field of
-          # package.json. We avoid `npm version`, which reconciles the whole
-          # workspace dependency tree and fails ERESOLVE on the pre-existing
-          # vitest peer mismatch (and also runs the preversion hook).
-          node -e 'const fs=require("fs");let s=fs.readFileSync("package.json","utf8");const m=s.match(/"version":\s*"(\d+)\.(\d+)\.(\d+)"/);if(!m)throw new Error("version not found");const next=m[1]+"."+m[2]+"."+(Number(m[3])+1);s=s.replace(/("version":\s*")\d+\.\d+\.\d+(")/,"$1"+next+"$2");fs.writeFileSync("package.json",s);fs.appendFileSync(process.env.GITHUB_OUTPUT,"version="+next+"\n");console.log("Bumped koenig-lexical to "+next)'
+          # package.json. We avoid `npm version` (it reconciles the whole
+          # workspace dep tree -> ERESOLVE on the vitest peer mismatch, and
+          # runs the preversion hook). We bump from max(package.json, latest
+          # published on npm) so a package.json that has drifted behind npm
+          # (e.g. earlier manual publishes) can't produce an already-taken
+          # version and fail `npm publish` with E403.
+          node -e 'const{execSync}=require("child_process");const fs=require("fs");let s=fs.readFileSync("package.json","utf8");const pv=JSON.parse(s).version;let nv="0.0.0";try{nv=execSync("npm view @fatih_ergun/koenig-lexical version",{encoding:"utf8"}).trim()||"0.0.0"}catch(e){console.log("npm view failed, falling back to package.json version")}const cmp=(a,b)=>{const A=a.split(".").map(Number),B=b.split(".").map(Number);for(let i=0;i<3;i++)if(A[i]!==B[i])return A[i]-B[i];return 0};const base=cmp(pv,nv)>=0?pv:nv;const v=base.split(".").map(Number);v[2]++;const next=v.join(".");if(!/^\d+\.\d+\.\d+$/.test(next))throw new Error("bad next version: "+next);s=s.replace(/("version":\s*")\d+\.\d+\.\d+(")/,"$1"+next+"$2");fs.writeFileSync("package.json",s);fs.appendFileSync(process.env.GITHUB_OUTPUT,"version="+next+"\n");console.log("pkg="+pv+" npm="+nv+" -> "+next)'
 
       - name: Commit version bump
         run: |
