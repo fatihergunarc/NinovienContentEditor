@@ -7,7 +7,9 @@ const CARD_WIDTH_CLASSES = {
         'md:min-w-[calc(100%+10rem)]',
         'lg:min-w-[calc(100%+18rem)]'
     ].join(' '),
-    full: 'inset-x-[-1px] mx-[calc(50%-50vw)] w-[calc(100vw+2px)] lg:mx-[calc(50%-50vw+(var(--kg-breakout-adjustment-with-fallback)/2))] lg:w-[calc(100vw-var(--kg-breakout-adjustment-with-fallback)+2px)]'
+    full: 'inset-x-[-1px] mx-[calc(50%-50vw)] w-[calc(100vw+2px)] lg:mx-[calc(50%-50vw+(var(--kg-breakout-adjustment-with-fallback)/2))] lg:w-[calc(100vw-var(--kg-breakout-adjustment-with-fallback)+2px)]',
+    'half-left': 'float-left w-1/2 mr-6 mb-3',
+    'half-right': 'float-right w-1/2 ml-6 mb-3'
 };
 
 export const CardWrapper = React.forwardRef(({
@@ -71,7 +73,7 @@ CardWrapper.propTypes = {
     isSelected: PropTypes.bool,
     isEditable: PropTypes.bool,
     isEditing: PropTypes.bool,
-    cardWidth: PropTypes.oneOf(['regular', 'wide', 'full']),
+    cardWidth: PropTypes.oneOf(['regular', 'wide', 'full', 'half-left', 'half-right']),
     icon: PropTypes.string
 };
 
